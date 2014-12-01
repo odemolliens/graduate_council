@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+@using Graduate_Council.Model;
+@using Graduate_Council.Common;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="../../Res/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../Res/css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
+    <link href="../../Res/css/facebox.css" rel="stylesheet" type="text/css" />
+    <link href="../../Res/css/visualize.css" rel="stylesheet" type="text/css" />
+    <link href="../../Res/css/date_input.css" rel="stylesheet" type="text/css" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="block">
+        <div class="block_head">
+            <div class="bheadl">
+            </div>
+            <div class="bheadr">
+            </div>
+            <h2>
+                页面</h2>
+            <ul>
+                <li class="nobg"><a href="#">编辑页面</a></li>
+                <li><a href="#">添加页面</a></li>
+            </ul>
+        </div>
+        <!-- .block_head ends -->
+        <div class="block_content">
+            <form action="" method="post">
+            <table cellpadding="0" cellspacing="0" width="100%" class="sortable">
+                <thead>
+                    <tr>
+                        <th width="10">
+                            <input type="checkbox" class="check_all">
+                        </th>
+                        <th class="header" style="cursor: pointer;">
+                            标题
+                        </th>
+                        <th class="header" style="cursor: pointer;">
+                            状态
+                        </th>
+                        <th class="header" style="cursor: pointer;">
+                            日期
+                        </th>
+                        <th class="header" style="cursor: pointer;">
+                            作者
+                        </th>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (NewInfo newInfo in (List<NewInfo>)ViewData["list"])
+                {
+                    if (newInfo.Id % 2 == 1)
+                    {
+                    <tr class="even">
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>
+                            <a href="#">@newInfo.Title</a>
+                        </td>
+                        <td>
+                            Published
+                        </td>
+                        <td>
+                            @newInfo.SubDateTime
+                        </td>
+                        <td>
+                            <a href="#">@newInfo.Author</a>
+                        </td>
+                        <td class="delete">
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                    else{
+                    <tr class="odd">
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>
+                            <a href="#">@newInfo.Title</a>
+                        </td>
+                        <td>
+                            Published
+                        </td>
+                        <td>
+                            @newInfo.SubDateTime
+                        </td>
+                        <td>
+                            <a href="#">@newInfo.Author</a>
+                        </td>
+                        <td class="delete">
+                            <a href="#">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                }
+                </tbody>
+            </table>
+            <div class="tableactions">
+                <select>
+                    <option>Actions</option>
+                    <option>删除</option>
+                    <option>编辑</option>
+                </select>
+                <input type="submit" class="submit tiny" value="Apply to selected">
+            </div>
+            <!-- .tableactions ends -->
+            <div class="pagination right">
+                @MvcHtmlString.Create(PageBar.GetPageBar((int)ViewData["pageIndex"], (int)ViewData["pageCount"]))
+            </div>
+            <!-- .pagination ends -->
+            </form>
+        </div>
+        <!-- .block_content ends -->
+        <div class="bendl">
+        </div>
+        <div class="bendr">
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Common\bin\Debug\Graduate_Council.Common.dll
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Common\bin\Debug\Graduate_Council.Common.pdb
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Common\obj\Debug\Graduate_Council.Common.dll
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Common\obj\Debug\Graduate_Council.Common.pdb

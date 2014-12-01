@@ -1,0 +1,4 @@
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\bin\Debug\Graduate_Council.Model.dll
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\bin\Debug\Graduate_Council.Model.pdb
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\obj\Debug\Graduate_Council.Model.dll
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\obj\Debug\Graduate_Council.Model.pdb

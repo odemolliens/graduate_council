@@ -1,0 +1,9 @@
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\bin\Debug\Graduate_Council.BLL.dll
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\bin\Debug\Graduate_Council.BLL.pdb
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\obj\Debug\Graduate_Council.BLL.dll
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\obj\Debug\Graduate_Council.BLL.pdb
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\bin\Debug\Graduate_Council.DAL.dll
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\bin\Debug\Graduate_Council.Model.dll
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\bin\Debug\Graduate_Council.DAL.pdb
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\bin\Debug\Graduate_Council.Model.pdb
+D:\git\graduate_council\Graduate_Council\Graduate_Council.BLL\obj\Debug\Graduate_Council.BLL.csprojResolveAssemblyReference.cache

@@ -12,6 +12,58 @@
     <link href="../../Res/css/facebox.css" rel="stylesheet" type="text/css" />
     <link href="../../Res/css/visualize.css" rel="stylesheet" type="text/css" />
     <link href="../../Res/css/date_input.css" rel="stylesheet" type="text/css" />
+    <script src="../../Scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#detailDiv").css("display", "none");
+            $("#addDiv").css("display", "none");
+            $(".detailNew").click(function () {
+                showDetail($(this).attr("ids"));
+            })
+            $(".deleteNew").click(function () {
+                deleteNew($(this).attr("ids"), $(this));
+            })
+            $("#addNewInfo").click(function () {
+                addNewInfo();
+            })
+        })
+        function addNewInfo() {
+            $("#addFrame").attr("src", "/Home/ShowAddInfo");
+            $("#addDiv").css("display", "block");
+        }
+        //删除新闻
+        function deleteNew(id,control) {
+            if (confirm("确定要删除这条信息吗？")) {
+                $.post("/Home/DeleteNewInfo", { "id": id }, function (data) {
+                    if (data == "ok") {
+                        $(control).parent().parent().remove();
+                        alert("删除成功");
+                    }
+                    else {
+                        alert("删除失败");
+                    }
+                })
+            }
+        }
+        //详细信息
+        function showDetail(id) {
+            $.post("/Home/GetNewDetail", { "id": id }, function (data) {
+                $("#Title").text(data.Title);
+                $("#Author").text(data.Author);
+                $("#Date").text(changeDateFormat(data.SubDateTime));
+                $("#Detail").text(data.Detail);
+            });
+            $("#detailDiv").css("display", "block");
+        }
+        //将序列化为Jason格式的日期转换为日期格式
+        function changeDateFormat(cellval) {
+            var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            return date.getFullYear() + "-" + month + "-" + currentDate;
+        }
+    </script>
     <title>Index</title>
 </head>
 <body>
@@ -25,7 +77,7 @@
                 页面</h2>
             <ul>
                 <li class="nobg"><a href="#">编辑页面</a></li>
-                <li><a href="#">添加页面</a></li>
+                <li><a href="javascript:void(0)" id="addNewInfo">添加页面</a></li>
             </ul>
         </div>
         <!-- .block_head ends -->
@@ -35,7 +87,7 @@
                 <thead>
                     <tr>
                         <th width="10">
-                            <input type="checkbox" class="check_all">
+                            <input type="checkbox" class="check_all" />
                         </th>
                         <th class="header" style="cursor: pointer;">
                             标题
@@ -61,10 +113,10 @@
                     {
                     <tr class="even">
                         <td>
-                            <input type="checkbox">
+                            <input type="checkbox"/>
                         </td>
                         <td>
-                            <a href="#">@newInfo.Title</a>
+                            <a href="javascript:void(0)" class="detailNew" ids="@newInfo.Id">@newInfo.Title</a>
                         </td>
                         <td>
                             Published
@@ -76,17 +128,17 @@
                             <a href="#">@newInfo.Author</a>
                         </td>
                         <td class="delete">
-                            <a href="#">Delete</a>
+                            <a href="javascript:void(0)" ids="@newInfo.Id" class="deleteNew">Delete</a>
                         </td>
                     </tr>
                     }
                     else{
                     <tr class="odd">
                         <td>
-                            <input type="checkbox">
+                            <input type="checkbox" />
                         </td>
                         <td>
-                            <a href="#">@newInfo.Title</a>
+                            <a href="javascript:void(0)" class="detailNew" ids="@newInfo.Id">@newInfo.Title</a>
                         </td>
                         <td>
                             Published
@@ -98,7 +150,7 @@
                             <a href="#">@newInfo.Author</a>
                         </td>
                         <td class="delete">
-                            <a href="#">Delete</a>
+                            <a href="javascript:void(0)" ids="@newInfo.Id" class="deleteNew">Delete</a>
                         </td>
                     </tr>
                     }
@@ -111,7 +163,7 @@
                     <option>删除</option>
                     <option>编辑</option>
                 </select>
-                <input type="submit" class="submit tiny" value="Apply to selected">
+                <input type="submit" class="submit tiny" value="Apply to selected" />
             </div>
             <!-- .tableactions ends -->
             <div class="pagination right">
@@ -125,6 +177,19 @@
         </div>
         <div class="bendr">
         </div>
+    </div>
+    <div id="detailDiv">
+        <table cellpadding="0" cellspacing="0" width="100%" class="sortable">
+            <tr><td>标题</td><td><span id="Title"></span></td></tr>
+            <tr><td>作者</td><td><span id="Author"></span></td></tr>
+            <tr><td>时间</td><td><span id="Date"></span></td></tr>
+            <tr><td>内容</td><td><span id="Detail"></span></td></tr>
+        </table>
+    </div>
+
+    <div id = "addDiv">
+        <iframe id="addFrame" frameborder="0" width="100%" height="100%">
+        </iframe>
     </div>
 </body>
 </html>

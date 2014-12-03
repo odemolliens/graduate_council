@@ -30,5 +30,14 @@ namespace Graduate_Council.BLL
             int pageCount = Convert.ToInt32(Math.Ceiling((double)recordCount / pageSize));
             return pageCount;
         }
+
+        public NewInfo GetNewInfo(int id)
+        {
+            return newInfoDal.GetNewInfo(id);
+        }
+        public bool DeleteNewInfo(int id)
+        {
+            return newInfoDal.DeleteNewInfo(id)>0;
+        }
     }
 }

@@ -1,0 +1,99 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>添加新闻</title>
+    <script src="../../Scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <link href="../../kindeditor-4.1.7/plugins/code/prettify.css" rel="stylesheet" type="text/css" />
+    <script src="../../kindeditor-4.1.7/kindeditor-min.js" type="text/javascript"></script>
+    <script charset="utf-8" src="../../kindeditor-4.1.7/kindeditor.js" type="text/javascript"></script>
+    <link href="../../kindeditor-4.1.7/themes/default/default.css" rel="stylesheet" type="text/css" />
+    <script charset="utf-8" src="../../kindeditor-4.1.7/plugins/code/prettify.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery.form.js" type="text/javascript"></script>
+    <script charset="utf-8" src="../../kindeditor-4.1.7/lang/zh_CN.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        KindEditor.ready(function (K) {
+            var editor1 = K.create('#MsgContent', {
+                cssPath: '/kindeditor-4.1.7/plugins/code/prettify.css',
+                uploadJson: '/kindeditor-4.1.7/asp.net/upload_json.ashx',
+                fileManagerJson: '/kindeditor-4.1.7/asp.net/file_manager_json.ashx',
+                allowFileManager: true,
+                afterBlur: function () { this.sync() },
+                afterCreate: function () {
+                    var self = this;
+                    self.sync();
+                }
+            });
+            prettyPrint();
+        })
+        $(function () {
+            fileUpload();
+        })
+        function fileUpload() {
+            $("#btn").click(function () {
+                if ($("#uploadImg").val() == "") {
+                    alert("请选择文件");
+                    return;
+                }
+                else {
+                    $("#form1").ajaxSubmit({
+                        type: "post",
+                        url: "/Home/FileUpload",
+                        success: function (data) {
+                            var serverDate = data.split(':');
+                            if (serverDate[0] == "ok") {
+                                $("#showImg").append("<img src='" + serverDate[1] + "' width='40px' height='40px'/>");
+                            }
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <div>
+    @using (Ajax.BeginForm("AddNewInfo", "Home", new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterAdd" }, new { id="form1"}))
+    {
+        <table>
+            <tr>
+                <td>标题</td>
+                <td>
+                    <input type="text" name="Title" />
+                </td>
+            </tr>
+            <tr>
+                <td>作者</td>
+                <td>
+                    <input type="text" name="Author" />
+                </td>
+            </tr> 
+            <tr>
+                <td>选择图片</td>
+                <td>
+                    <input type="file" id="uploadImg" name="uploadImg" />
+                    <input type="submit" id="btn" value="上传图片"/>
+                    <div id="showImg"></div>
+                </td>
+            </tr>
+            <tr>
+                    
+                
+            </tr>
+            <tr>
+                <td>新闻内容</td>
+                <td>
+                    <textarea id="MsgContent" cols="100" rows="8" style="width:800px;height:200px;visibility:hidden" name="Detail"></textarea>
+                </td>
+            </tr>             
+        </table>
+    }
+    </div>
+</body>
+</html>

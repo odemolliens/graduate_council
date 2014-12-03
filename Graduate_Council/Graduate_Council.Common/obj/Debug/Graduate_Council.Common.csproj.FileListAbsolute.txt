@@ -2,3 +2,8 @@ D:\git\graduate_council\Graduate_Council\Graduate_Council.Common\bin\Debug\Gradu
 D:\git\graduate_council\Graduate_Council\Graduate_Council.Common\bin\Debug\Graduate_Council.Common.pdb
 D:\git\graduate_council\Graduate_Council\Graduate_Council.Common\obj\Debug\Graduate_Council.Common.dll
 D:\git\graduate_council\Graduate_Council\Graduate_Council.Common\obj\Debug\Graduate_Council.Common.pdb
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Common\bin\Debug\Graduate_Council.Common.dll
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Common\bin\Debug\Graduate_Council.Common.pdb
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Common\obj\Debug\ResolveAssemblyReference.cache
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Common\obj\Debug\Graduate_Council.Common.dll
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Common\obj\Debug\Graduate_Council.Common.pdb

@@ -2,3 +2,9 @@ D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\bin\Debug\Gradua
 D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\bin\Debug\Graduate_Council.Model.pdb
 D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\obj\Debug\Graduate_Council.Model.dll
 D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\obj\Debug\Graduate_Council.Model.pdb
+D:\git\graduate_council\Graduate_Council\Graduate_Council.Model\obj\Debug\Graduate_Council.Model.csprojResolveAssemblyReference.cache
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Model\bin\Debug\Graduate_Council.Model.dll
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Model\bin\Debug\Graduate_Council.Model.pdb
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Model\obj\Debug\ResolveAssemblyReference.cache
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Model\obj\Debug\Graduate_Council.Model.dll
+E:\WorkSpace\graduate_council\Graduate_Council\Graduate_Council.Model\obj\Debug\Graduate_Council.Model.pdb

@@ -1,0 +1,9 @@
+/Graduate_Council/Graduate_Council/Web.config
+
+# Other useful stuff
+*.bak
+*.cache
+*.log
+*.swp
+*.user
+*/obj/*

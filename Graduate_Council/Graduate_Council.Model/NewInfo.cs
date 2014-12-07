@@ -12,5 +12,7 @@ namespace Graduate_Council.Model
         public string Author { get; set; }
         public string Detail { get; set; }
         public DateTime SubDateTime { get; set; }
+        public int Category { get; set; }
+        public int PageView { get; set; }
     }
 }

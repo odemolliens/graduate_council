@@ -1,0 +1,232 @@
+.backstage{
+	color: #FF7429;
+}
+
+.backstage:hover{
+	color: #FF7429;
+	text-decoration: underline;
+}
+
+.text-center{
+	text-align: center;
+}
+
+
+
+#myFocus{
+	 width:1020px;
+	 height:200px;
+	 background: none !important;
+}
+
+.focus{
+	margin:0;
+	padding:0;
+}
+.pic{
+	width:1020px;
+	height:200px;
+	float:left;
+}
+.focus li{
+	width: 100%;
+	list-style:none;
+	float:left;
+	background: none;
+}
+.focus li img{
+	 width:1020px;
+	 height:200px;
+}
+
+.article-entry .span3,.span1{
+	 word-break:keep-all;/* 不换行 */
+   white-space:nowrap;/* 不换行 */
+   overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+   text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+
+.article-entry .span1{
+	font-size: 11px;
+	margin-left: 10px;
+}
+
+.article-entry .span3{
+	text-indent: 1em;
+}
+
+
+.main-page{
+	width: 764px;
+	float: left;
+	background: #FFF;
+	min-height: 600px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 20px;
+	/*border-top: #2982A8 2px solid;*/
+	/*border: #2982A8 1px solid;*/
+}
+
+.left-nav{
+	width: 234px;
+	height: auto;
+	background: #FFFFFF;
+	float: left;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 6px;
+	border-bottom: #3a9ac4 2px solid;
+}
+
+.left-nav .title{
+	width: 245px;
+	margin-left: -6px;
+	background: #3a9ac4;
+	color: #FFF;
+	float: left;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 15px;
+	margin-top: 2px;
+	letter-spacing: 2px;
+	font-weight: bold;
+	/*margin-top: 10px;*/
+}
+
+.left-nav .title span.tran-left{
+	border-right: 6px solid #156e9b;
+	border-bottom: 8px solid transparent;
+	width: 0px;
+	display: block;
+	position: relative;
+	float: left;
+	margin-top: 50px;
+	}
+.left-nav .title span.tran-right{
+	border-left: 6px solid #156e9b;
+	border-bottom: 8px solid transparent;
+	width: 0px;
+	display: block;
+	position: relative;
+	float: right;
+	margin-top: 50px;
+	}
+
+.left-nav ul{
+	width: 100%;
+	float: left;
+	list-style: none;
+	/*border-top: #D1E7CE 1px solid;*/
+}
+
+.left-nav ul li{
+	float: left;
+	width: 100%;
+}
+
+.left-nav ul li a{
+	line-height: 40px;
+	width: 100%;
+	float: left;
+	text-align: center;
+	font-size: 16px;
+	color: #444;
+}
+
+.left-nav ul li a:hover{
+	background: #79C4CA;
+	color: #FFF;
+}
+
+
+table.news-list{
+	width: 100%;
+}
+
+table.news-list tbody tr th{
+	text-align: left;
+	text-indent: 1em;
+	font-size: 14px;
+	line-height: 40px;
+	
+	border-bottom: #D1E7CE 1px dashed;
+}
+
+table.news-list tbody tr th a{
+	color: #333;
+	width: 100%;
+	float: left;
+	font-weight: 100;
+}
+
+table.news-list tbody tr th a:hover{
+	color: #2982A8;
+}
+
+table.news-list tbody tr td{
+	text-align: center;
+	color: #999;
+	border-bottom: #D1E7CE 1px dashed;
+}
+
+.path{
+	width: 100%;
+	/*border-left: #3a9ac4 4px solid;*/
+	line-height: 30px;
+	float: left;
+	background: #eee;
+	text-indent: 1em;
+	color: #999;
+	font-size: 12px;
+}
+
+table.news-list thead tr th{
+	background: #eee;
+	color: #666;
+	line-height: 30px;
+}
+
+
+.article{
+  width: 100%;
+  float: left;
+  height: auto;
+  margin-top: 20px;
+}
+
+
+.article .title{
+  width: 100%;
+  line-height: 40px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px;
+}
+
+.article .info{
+  line-height: 25px;
+  font-weight: 100;
+  text-align: center;
+  color: #666;
+}
+
+
+.article .content{
+  padding-left: 2%;
+  padding-right: 2%;
+  width: 96%;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  line-height: 25px;
+}
+
+.single-page{
+  width: 1024px;
+  margin-top: 20px;
+  background: #FFFFFF;
+  float: left;
+  margin-bottom: 20px;
+}

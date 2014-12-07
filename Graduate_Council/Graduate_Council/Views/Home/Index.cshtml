@@ -1,195 +1,207 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/_LayoutPage.cshtml";
 }
 @using Graduate_Council.Model;
-@using Graduate_Council.Common;
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="../../Res/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="../../Res/css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
-    <link href="../../Res/css/facebox.css" rel="stylesheet" type="text/css" />
-    <link href="../../Res/css/visualize.css" rel="stylesheet" type="text/css" />
-    <link href="../../Res/css/date_input.css" rel="stylesheet" type="text/css" />
-    <script src="../../Scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
-    <script src="../../Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#detailDiv").css("display", "none");
-            $("#addDiv").css("display", "none");
-            $(".detailNew").click(function () {
-                showDetail($(this).attr("ids"));
-            })
-            $(".deleteNew").click(function () {
-                deleteNew($(this).attr("ids"), $(this));
-            })
-            $("#addNewInfo").click(function () {
-                addNewInfo();
-            })
-        })
-        function addNewInfo() {
-            $("#addFrame").attr("src", "/Home/ShowAddInfo");
-            $("#addDiv").css("display", "block");
-        }
-        //删除新闻
-        function deleteNew(id,control) {
-            if (confirm("确定要删除这条信息吗？")) {
-                $.post("/Home/DeleteNewInfo", { "id": id }, function (data) {
-                    if (data == "ok") {
-                        $(control).parent().parent().remove();
-                        alert("删除成功");
-                    }
-                    else {
-                        alert("删除失败");
-                    }
-                })
-            }
-        }
-        //详细信息
-        function showDetail(id) {
-            $.post("/Home/GetNewDetail", { "id": id }, function (data) {
-                $("#Title").text(data.Title);
-                $("#Author").text(data.Author);
-                $("#Date").text(changeDateFormat(data.SubDateTime));
-                $("#Detail").text(data.Detail);
-            });
-            $("#detailDiv").css("display", "block");
-        }
-        //将序列化为Jason格式的日期转换为日期格式
-        function changeDateFormat(cellval) {
-            var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
-            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-            return date.getFullYear() + "-" + month + "-" + currentDate;
-        }
-    </script>
-    <title>Index</title>
-</head>
-<body>
-    <div class="block">
-        <div class="block_head">
-            <div class="bheadl">
-            </div>
-            <div class="bheadr">
-            </div>
-            <h2>
-                页面</h2>
-            <ul>
-                <li class="nobg"><a href="#">编辑页面</a></li>
-                <li><a href="javascript:void(0)" id="addNewInfo">添加页面</a></li>
-            </ul>
-        </div>
-        <!-- .block_head ends -->
-        <div class="block_content">
-            <form action="" method="post">
-            <table cellpadding="0" cellspacing="0" width="100%" class="sortable">
-                <thead>
-                    <tr>
-                        <th width="10">
-                            <input type="checkbox" class="check_all" />
-                        </th>
-                        <th class="header" style="cursor: pointer;">
-                            标题
-                        </th>
-                        <th class="header" style="cursor: pointer;">
-                            状态
-                        </th>
-                        <th class="header" style="cursor: pointer;">
-                            日期
-                        </th>
-                        <th class="header" style="cursor: pointer;">
-                            作者
-                        </th>
-                        <td>
-                            &nbsp;
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (NewInfo newInfo in (List<NewInfo>)ViewData["list"])
-                {
-                    if (newInfo.Id % 2 == 1)
-                    {
-                    <tr class="even">
-                        <td>
-                            <input type="checkbox"/>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)" class="detailNew" ids="@newInfo.Id">@newInfo.Title</a>
-                        </td>
-                        <td>
-                            Published
-                        </td>
-                        <td>
-                            @newInfo.SubDateTime
-                        </td>
-                        <td>
-                            <a href="#">@newInfo.Author</a>
-                        </td>
-                        <td class="delete">
-                            <a href="javascript:void(0)" ids="@newInfo.Id" class="deleteNew">Delete</a>
-                        </td>
-                    </tr>
-                    }
-                    else{
-                    <tr class="odd">
-                        <td>
-                            <input type="checkbox" />
-                        </td>
-                        <td>
-                            <a href="javascript:void(0)" class="detailNew" ids="@newInfo.Id">@newInfo.Title</a>
-                        </td>
-                        <td>
-                            Published
-                        </td>
-                        <td>
-                            @newInfo.SubDateTime
-                        </td>
-                        <td>
-                            <a href="#">@newInfo.Author</a>
-                        </td>
-                        <td class="delete">
-                            <a href="javascript:void(0)" ids="@newInfo.Id" class="deleteNew">Delete</a>
-                        </td>
-                    </tr>
-                    }
-                }
-                </tbody>
-            </table>
-            <div class="tableactions">
-                <select>
-                    <option>Actions</option>
-                    <option>删除</option>
-                    <option>编辑</option>
-                </select>
-                <input type="submit" class="submit tiny" value="Apply to selected" />
-            </div>
-            <!-- .tableactions ends -->
-            <div class="pagination right">
-                @MvcHtmlString.Create(PageBar.GetPageBar((int)ViewData["pageIndex"], (int)ViewData["pageCount"]))
-            </div>
-            <!-- .pagination ends -->
-            </form>
-        </div>
-        <!-- .block_content ends -->
-        <div class="bendl">
-        </div>
-        <div class="bendr">
-        </div>
-    </div>
-    <div id="detailDiv">
-        <table cellpadding="0" cellspacing="0" width="100%" class="sortable">
-            <tr><td>标题</td><td><span id="Title"></span></td></tr>
-            <tr><td>作者</td><td><span id="Author"></span></td></tr>
-            <tr><td>时间</td><td><span id="Date"></span></td></tr>
-            <tr><td>内容</td><td><span id="Detail"></span></td></tr>
-        </table>
-    </div>
+  <div class="base"> 
+   <div class="container"> 
+    <div class="content"> 
+      <div class="row">
+        <div class="home-left-banner"> 
+        <div id="myFocus"> 
+         <div class="pic"> 
+          <ul class="focus"> 
+           <li><a href="javascript:;"><img src="/images/banner/banner1.png" thumb="" text="" /></a></li> 
+           <li><a href="javascript:;"><img src="/images/banner/banner4.png" thumb="" text="" /></a></li> 
+           <li><a href="javascript:;"><img src="/images/banner/banner5.png" thumb="" text="" /></a></li> 
+          </ul> 
+         </div> 
+        </div> 
+       </div> 
+      </div>
+     <div class="row"> 
+      <div class="home-left"> 
 
-    <div id = "addDiv">
-        <iframe id="addFrame" frameborder="0" width="100%" height="100%">
-        </iframe>
-    </div>
-</body>
-</html>
+       <div class="home-floor">
+        <div class="home-box">
+        <div class="title" style="color:#D86B21;"><img src="/images/icon/new32.png" />信息前沿</div>
+        <table class="list-table">
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+                    <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+        </table>
+        </div>
+        <div class="home-box" style="margin-left:20px;">
+
+        <div class="title" style="color:#5E9A33;"><img src="/images/icon/mphone32.png" />通知公告</div>
+        <table class="list-table">
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+                    <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+        </table>
+        </div>
+        </div>
+
+       <div class="home-floor">
+        <div class="home-box">
+        <div class="title" style="color:#2B6377;"><img src="/images/icon/pictures32.png" />校园油记</div>
+        <table class="list-table">
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+                    <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+        </table>
+        </div>
+        <div class="home-box" style="margin-left:20px;">
+
+        <div class="title" style="color:#6C98E3;"><img src="/images/icon/diagram32.png" />研会动态</div>
+        <table class="list-table">
+        @foreach (NewInfo newInfo in (List<NewInfo>)ViewData["list"])
+        {
+          <tr>
+            <th><a href="#">@newInfo.Title</a></th>
+            <td>@newInfo.SubDateTime.ToShortDateString()</td>
+          </tr>
+        }
+        </table>
+        </div>
+        </div>
+
+       <div class="home-floor">
+        <div class="home-box">
+        <div class="title" style="color:#3B8AD6;"><img src="/images/icon/info32.png" />分会动态</div>
+        <table class="list-table">
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+                    <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+        </table>
+        </div>
+        <div class="home-box" style="margin-left:20px;">
+
+        <div class="title" style="color:#D86B21;"><img src="/images/icon/statistics32.png" />就业信息</div>
+        <table class="list-table">
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+                    <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+          <tr>
+            <th><a href="#">我校研究生在第十一届全国研究生数学建模竞赛中喜获佳绩</a></th>
+            <td>2014-10-21</td>
+          </tr>
+        </table>
+        </div>
+        </div>
+       </div>
+      <div class="home-right">
+        <div class="home-right-otherfun">
+          <div class="home-right-tips">
+          <h3>欢迎投稿</h3>
+          <p>信息前沿稿件，收录有稿费的哦！投稿邮箱： swpugsu@163.com</p>
+          </div>
+        </div>
+        <div class="home-right-otherfun" style="margin-bottom:0px;">
+       <iframe width="100%" height="600" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=600&fansRow=1&ptype=1&speed=0&skin=5&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=3860526566&verifier=826f0ad7&dpc=1"></iframe>
+       </div>
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div>

@@ -36,3 +36,4 @@ D:\git\graduate_council\Graduate_Council\Graduate_Council\bin\Graduate_Council.D
 D:\git\graduate_council\Graduate_Council\Graduate_Council\bin\Graduate_Council.Model.pdb
 D:\git\graduate_council\Graduate_Council\Graduate_Council\bin\Graduate_Council.Common.dll
 D:\git\graduate_council\Graduate_Council\Graduate_Council\bin\Graduate_Council.Common.pdb
+D:\git\graduate_council\Graduate_Council\Graduate_Council\bin\LitJSON.dll

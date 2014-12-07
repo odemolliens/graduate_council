@@ -39,5 +39,14 @@ namespace Graduate_Council.BLL
         {
             return newInfoDal.DeleteNewInfo(id)>0;
         }
+        public bool AddNewInfo(NewInfo newInfo)
+        {
+            return newInfoDal.AddNewInfo(newInfo) > 0;
+        }
+
+        public bool UpdateNewInfo(NewInfo newInfo)
+        {
+            return newInfoDal.UpdateNewInfo(newInfo) > 0;
+        }
     }
 }

@@ -16,37 +16,37 @@ namespace Graduate_Council.BLL
         /// <param name="pageIndex">当页页码值</param>
         /// <param name="pageSize">每页显示的记录</param>
         /// <returns></returns>
-        public List<NewInfo> GetPageList(int pageIndex, int pageSize)
+        public List<NewInfo> GetPageList(int pageIndex, int pageSize,string tableName)
         {
             int start = (pageIndex - 1) * pageSize + 1;
             int end = pageSize * pageIndex;
-            List<NewInfo> list = newInfoDal.GetPageList(start, end);
+            List<NewInfo> list = newInfoDal.GetPageList(start, end, tableName);
             return list;
         }
 
-        public int GetPageCount(int pageSize)
+        public int GetPageCount(int pageSize,string tableName)
         {
-            int recordCount = newInfoDal.GetRecordCount();
+            int recordCount = newInfoDal.GetRecordCount(tableName);
             int pageCount = Convert.ToInt32(Math.Ceiling((double)recordCount / pageSize));
             return pageCount;
         }
 
-        public NewInfo GetNewInfo(int id)
+        public NewInfo GetNewInfo(int id,string tableName)
         {
-            return newInfoDal.GetNewInfo(id);
+            return newInfoDal.GetNewInfo(id, tableName);
         }
-        public bool DeleteNewInfo(int id)
+        public bool DeleteNewInfo(int id, string tableName)
         {
-            return newInfoDal.DeleteNewInfo(id)>0;
+            return newInfoDal.DeleteNewInfo(id, tableName) > 0;
         }
-        public bool AddNewInfo(NewInfo newInfo)
+        public bool AddNewInfo(NewInfo newInfo, string tableName)
         {
-            return newInfoDal.AddNewInfo(newInfo) > 0;
+            return newInfoDal.AddNewInfo(newInfo, tableName) > 0;
         }
 
-        public bool UpdateNewInfo(NewInfo newInfo)
+        public bool UpdateNewInfo(NewInfo newInfo, string tableName)
         {
-            return newInfoDal.UpdateNewInfo(newInfo) > 0;
+            return newInfoDal.UpdateNewInfo(newInfo, tableName) > 0;
         }
     }
 }

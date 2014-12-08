@@ -15,6 +15,8 @@ namespace Graduate_Council.Controllers
 
         public ActionResult Index()
         {
+            ViewData["Name"] = "CouncilDynamicNews";
+            ViewData["Msg"] = "研会动态";
             return View();
         }
         public ActionResult ReturnTopView()
@@ -31,12 +33,15 @@ namespace Graduate_Council.Controllers
         /// <returns></returns>
         public ActionResult ReturnRightView()
         {
+            string tableName = "T_" + Request["Name"];
+            ViewData["Msg"] = Request["Msg"];
             int pageIndex = Convert.ToInt32(Request["PageIndex"]);
             int pageSize = 5;
-            int pageCount = newInfoService.GetPageCount(pageSize);
+            int pageCount = newInfoService.GetPageCount(pageSize,tableName);
             pageIndex = pageIndex < 1 ? 1 : pageIndex;
             pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
-            List<NewInfo> list = newInfoService.GetPageList(pageIndex, pageSize);
+            List<NewInfo> list = newInfoService.GetPageList(pageIndex, pageSize,tableName);
+            ViewData["Name"] = Request["Name"];
             ViewData["list"] = list;
             ViewData["pageCount"] = pageCount;
             ViewData["pageIndex"] = pageIndex;
@@ -46,8 +51,9 @@ namespace Graduate_Council.Controllers
         }
         public ActionResult DeleteNewInfo()
         {
+            string tableName = "T_" + Request["Name"];
             int id = Convert.ToInt32(Request["id"]);
-            if (newInfoService.DeleteNewInfo(id))
+            if (newInfoService.DeleteNewInfo(id, tableName))
             {
                 return Content("ok");
             }
@@ -59,6 +65,8 @@ namespace Graduate_Council.Controllers
         [HttpGet]
         public ActionResult AddNewInfo()
         {
+            ViewData["Name"] = Request["Name"];
+            ViewData["Msg"] = Request["Msg"];
             return View();
         }
         /// <summary>
@@ -70,7 +78,7 @@ namespace Graduate_Council.Controllers
         [ValidateInput(false)]
         public ActionResult AddNewInfo(NewInfo newInfo)
         {
-            newInfo.Category = 1;
+            string tableName = "T_" + Request["Name"];
             newInfo.PageView = 0;
             if (newInfo.Title == null)
             {
@@ -88,7 +96,7 @@ namespace Graduate_Council.Controllers
             {
                 return Content("请输入并且正确输入日期,时间格式"+DateTime.Now.ToString());
             }
-            if (newInfoService.AddNewInfo(newInfo))
+            if (newInfoService.AddNewInfo(newInfo, tableName))
             {
                 return Content("ok");
             }
@@ -101,11 +109,43 @@ namespace Graduate_Council.Controllers
 
         public ActionResult EditNew()
         {
+            string tableName = "T_" + Request["Name"];
+            ViewData["Name"] = Request["Name"];
+            ViewData["Msg"] = Request["Msg"];
             int id = Convert.ToInt32(Request["Id"]);
-            NewInfo newInfo = newInfoService.GetNewInfo(id);
+            NewInfo newInfo = newInfoService.GetNewInfo(id,tableName);
             ViewData.Model = newInfo;
             return View();           
         }
+        [ValidateInput(false)]
+        public ActionResult UpdateNewInfo(NewInfo newInfo)
+        {
+            string tableName = "T_" + Request["Name"];           
+            if (newInfo.Title == null)
+            {
+                return Content("请输入标题");
+            }
+            if (string.IsNullOrEmpty(newInfo.Author))
+            {
+                return Content("请输入来源");
+            }
+            if (string.IsNullOrEmpty(newInfo.Detail))
+            {
+                return Content("请输入新闻内容");
+            }
+            if (newInfo.SubDateTime == new DateTime(1, 1, 1, 0, 0, 0))
+            {
+                return Content("请输入并且正确输入日期,时间格式" + DateTime.Now.ToString());
+            }
+            if (newInfoService.UpdateNewInfo(newInfo, tableName))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
 
+        }
     }
 }

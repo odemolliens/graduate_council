@@ -15,7 +15,8 @@ namespace Graduate_Council.Controllers
         NewInfoService newInfoService = new NewInfoService();
         public ActionResult Index()
         {
-            List<NewInfo> list = newInfoService.GetPageList(1, 6);
+
+            List<NewInfo> list = newInfoService.GetPageList(1, 6, "T_CouncilDynamicNews");
             ViewData["list"] = list;
             return View();
         }

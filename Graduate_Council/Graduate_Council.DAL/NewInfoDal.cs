@@ -16,10 +16,10 @@ namespace Graduate_Council.DAL
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public List<NewInfo> GetPageList(int start, int end)
+        public List<NewInfo> GetPageList(int start, int end,string tableName)
         {
-            string sql = "select * from (select row_number() over (order by id) as num, * from T_CouncilDynamicNews) as t where t.num>=@start and t.num<=@end";
-            SqlParameter[] pars = { new SqlParameter("@start", start), new SqlParameter("@end", end) };
+            string sql = "select * from (select row_number() over (order by Date) as num, * from "+tableName+") as t where t.num>=@start and t.num<=@end";
+            SqlParameter[] pars = { new SqlParameter("@start", start), new SqlParameter("@end", end)};
             DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, pars);
             List<NewInfo> newlist = null;
             if (dt.Rows.Count > 0)
@@ -44,16 +44,16 @@ namespace Graduate_Council.DAL
             newInfo.Author = dr["Author"].ToString();
             newInfo.SubDateTime = Convert.ToDateTime(dr["Date"]);
             newInfo.Detail = dr["Detail"].ToString();
-            newInfo.Category = Convert.ToInt32(dr["Category"]);
+            newInfo.Category = dr["Category"].ToString();
             newInfo.PageView = Convert.ToInt32(dr["PageView"]);
         }
         /// <summary>
         /// 获取记录数
         /// </summary>
         /// <returns></returns>
-        public int GetRecordCount()
+        public int GetRecordCount(string tableName)
         {
-            string sql = "select count(*) from T_CouncilDynamicNews";
+            string sql = "select count(*) from " + tableName;            
             return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text));
         }
         /// <summary>
@@ -61,11 +61,11 @@ namespace Graduate_Council.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public NewInfo GetNewInfo(int id)
+        public NewInfo GetNewInfo(int id,string tableName)
         {
-            string sql = "select * from T_CouncilDynamicNews where Id = @id";
-            SqlParameter pars = new SqlParameter("@id", DbType.Int32);
-            pars.Value = id;
+            string sql = "select * from "+tableName+" where Id = @id";
+            SqlParameter[] pars = {new SqlParameter("@id", DbType.Int32)};
+            pars[0].Value = id;
             DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, pars);
             NewInfo newInfo = null;
             if (dt.Rows.Count > 0)
@@ -80,11 +80,11 @@ namespace Graduate_Council.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public int DeleteNewInfo(int id)
+        public int DeleteNewInfo(int id, string tableName)
         {
-            string sql = "delete from T_CouncilDynamicNews where Id = @id";
-            SqlParameter par = new SqlParameter("@id", DbType.Int32);
-            par.Value = id;
+            string sql = "delete from "+tableName+" where Id = @id";
+            SqlParameter[] par = { new SqlParameter("@id", DbType.Int32)};
+            par[0].Value = id;
             return SqlHelper.ExecuteNonquery(sql, CommandType.Text, par);
         }
         /// <summary>
@@ -92,14 +92,14 @@ namespace Graduate_Council.DAL
         /// </summary>
         /// <param name="newInfo"></param>
         /// <returns></returns>
-        public int AddNewInfo(NewInfo newInfo)
+        public int AddNewInfo(NewInfo newInfo,string tableName)
         {
-            string sql = "insert into T_CouncilDynamicNews(Title,Author,Detail,Date,Category,PageView) values(@Title,@Author,@Detail,@Date,@Category,@PageView)";
+            string sql = "insert into "+tableName+"(Title,Author,Detail,Date,Category,PageView) values(@Title,@Author,@Detail,@Date,@Category,@PageView)";
             SqlParameter[] pars = {new SqlParameter("@Title",SqlDbType.NVarChar,50),
                                   new SqlParameter("@Author",SqlDbType.NVarChar,50),
                                   new SqlParameter("@Detail",SqlDbType.NVarChar),
                                   new SqlParameter("@Date",SqlDbType.SmallDateTime),
-                                  new SqlParameter("@Category",SqlDbType.SmallInt),
+                                  new SqlParameter("@Category",SqlDbType.NVarChar,50),
                                   new SqlParameter("@PageView",SqlDbType.Int)
                                   };
             pars[0].Value = newInfo.Title;
@@ -117,16 +117,16 @@ namespace Graduate_Council.DAL
         /// </summary>
         /// <param name="newInfo"></param>
         /// <returns></returns>
-        public int UpdateNewInfo(NewInfo newInfo)
+        public int UpdateNewInfo(NewInfo newInfo,string tableName)
         {
-            string sql = "update T_CouncilDynamicNews set Title = @Title, Author=@Author,Detail = @Detail,Date = @Date, Category=@Category,PageView=@PageView where Id = @Id";
+            string sql = "update "+tableName+" set Title = @Title, Author=@Author,Detail = @Detail,Date = @Date, Category=@Category,PageView=@PageView where Id = @Id";
             SqlParameter[] pars = {new SqlParameter("@Title",SqlDbType.NVarChar,50),
                                        new SqlParameter("@Author",SqlDbType.NVarChar,50),
                                        new SqlParameter("@Detail",SqlDbType.NVarChar),
                                        new SqlParameter("@Date",SqlDbType.SmallDateTime),
                                        new SqlParameter("@Id",SqlDbType.Int),
-                                       new SqlParameter("@Category",SqlDbType.SmallInt),
-                                        new SqlParameter("@ViewPage",SqlDbType.Int)
+                                       new SqlParameter("@Category",SqlDbType.NVarChar,50),
+                                        new SqlParameter("@PageView",SqlDbType.Int)
                                    };
             pars[0].Value = newInfo.Title;
             pars[1].Value = newInfo.Author;

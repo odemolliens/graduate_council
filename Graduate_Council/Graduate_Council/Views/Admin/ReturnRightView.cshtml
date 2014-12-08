@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
+<title>@ViewData["Msg"]</title>
     <link href="../../Res/Admin/css/style.css" rel="stylesheet" type="text/css" />
     <script src="../../Res/Admin/js/jquery.js" type="text/javascript"></script>
     <script src="../../Scripts/jquery-1.8.2.min.js" type="text/javascript"></script>    
@@ -14,28 +14,16 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".click").click(function () {
-            $(".tip").fadeIn(200);
-        });
-
-        $(".tiptop a").click(function () {
-            $(".tip").fadeOut(200);
-        });
-
-        $(".sure").click(function () {
-            $(".tip").fadeOut(100);
-        });
-
-        $(".cancel").click(function () {
-            $(".tip").fadeOut(100);
+            window.location.href="/Admin/AddNewInfo?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
         });
         $(".deleteNews").click(function () {
-            deleteNew($(this).attr("ids"), $(this));
+            deleteNew($(this).attr("ids"),$(this).attr("name"),$(this));
         })
 
     });    
-    function deleteNew(id, control) {
+    function deleteNew(id, name,control) {
         if (confirm("确定要删除这条信息吗？")) {
-            $.post("/Admin/DeleteNewInfo", { "id": id }, function (data) {
+            $.post("/Admin/DeleteNewInfo", { "id": id, "Name": name }, function (data) {
                 if (data == "ok") {
                     $(control).parent().parent().remove();
                     alert("删除成功");
@@ -58,7 +46,7 @@
     <span>位置：</span>
     <ul class="placeul">
     <li>新闻管理</li>
-    <li>研会动态</li>
+    <li>@ViewData["Msg"]</li>
     </ul>
     </div>
     
@@ -67,7 +55,7 @@
     <div class="tools">
     
     	<ul class="toolbar">
-        <li class="click"><span><img src="/images/t01.png" /></span><a href="/Admin/AddNewInfo" target="_self">添加新闻</a></li>
+        <li class="click"><span><img src="/images/t01.png" /></span><a href="/Admin/AddNewInfo?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" target="_self">添加新闻</a></li>
         </ul>
     </div>
     
@@ -78,9 +66,9 @@
         <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
         <th>标题</th>
         <th>来源</th>
-        <th>籍贯</th>
+        <th>类别</th>
         <th>发布时间</th>
-        <th>是否审核</th>
+        <th>访问量</th>
         <th>操作</th>
         </tr>
         </thead>
@@ -91,10 +79,10 @@
         <td>@newInfo.Id</td>
         <td>@newInfo.Title</td>
         <td>@newInfo.Author</td>
-        <td>江苏南京</td>
+        <td>@newInfo.Category</td>
         <td>@newInfo.SubDateTime</td>
-        <td>已审核</td>
-        <td><a href="/Admin/EditNew?Id=@newInfo.Id" class="tablelink">查看</a>     <a href="javascript:void(0)" class="deleteNews" ids="@newInfo.Id"> 删除</a></td>
+        <td>@newInfo.PageView</td>
+        <td><a href="/Admin/EditNew?Id=@newInfo.Id&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" class="tablelink">查看</a>     <a href="javascript:void(0)" class="deleteNews" name="@ViewData["Name"]" ids="@newInfo.Id"> 删除</a></td>
         </tr>
         } 
                 
@@ -105,7 +93,7 @@
     <div class="pagin">
     	<div class="message">共<i class="blue">@ViewData["pageCount"]</i>页，当前显示第&nbsp;<i class="blue">@ViewData["pageIndex"]&nbsp;</i>页</div>
         <ul class="paginList">
-        <li class="paginItem"><a href="?PageIndex=@ViewData["pagePre"]"><span class="pagepre"></span></a></li>
+        <li class="paginItem"><a href="?PageIndex=@ViewData["pagePre"]&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]"><span class="pagepre"></span></a></li>
         @for (int i = 1; i <= (int)ViewData["pageCount"]; i++)
         {
             if (i == (int)ViewData["pageIndex"])
@@ -114,10 +102,10 @@
             }
             else
             {
-                <li class="paginItem"><a href="?PageIndex=@i">@i</a></li> 
-            }        
+                <li class="paginItem"><a href="?PageIndex=@i&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]">@i</a></li> 
+            }
         }
-        <li class="paginItem"><a href="?PageIndex=@ViewData["pageNext"]"><span class="pagenxt"></span></a></li>
+        <li class="paginItem"><a href="?PageIndex=@ViewData["pageNext"]&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]"><span class="pagenxt"></span></a></li>
         </ul>
     </div>
     

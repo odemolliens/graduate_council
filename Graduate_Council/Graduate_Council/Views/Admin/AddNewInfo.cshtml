@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+@using Graduate_Council.Model;
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +52,7 @@
         function AfterSuccess(data) {
             if (data == "ok") {
                 alert("信息添加成功！");
-                window.location.href = "/Admin/ReturnRightView";
+                window.location.href = "/Admin/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
             }
             else if (data == "no") {
                 alert("信息添加失败！");
@@ -62,7 +63,7 @@
         }
         function exit() {
             if (confirm("确定要退出么？")) {
-                window.location.href = "/Admin/ReturnRightView";
+                window.location.href = "/Admin/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
             }
         }
     </script>
@@ -71,8 +72,8 @@
     <div class="place">
         <span>位置：</span>
         <ul class="placeul">
-            <li><a href="#">新闻管理</a></li>
-            <li><a href="#">研会动态</a></li>
+            <li>新闻管理</li>
+            <li><a href="/Admin/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]">@ViewData["Msg"]</a></li>
             <li>添加新闻</li>
         </ul>
     </div>
@@ -85,9 +86,10 @@
             </div>
             <div id="tab1" class="tabson">
                 <div class="formtext">
-                    Hi，<b>admin</b>，欢迎您使用新闻发布功能！</div>
+                    添加<b>@ViewData["Msg"]</b>新闻！</div>
                     @using (Ajax.BeginForm("AddNewInfo", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "AfterSuccess" }, new { id = "form1" }))
-                    {                                                                          
+                    { 
+                        <input type="hidden" name="Name" value="@ViewData["Name"]"/>                                                                         
                 <ul class="forminfo">
                     <li>                    
                         <label>
@@ -105,8 +107,11 @@
                             新闻类型<b>*</b></label>
                         <div class="usercity">
                             <div class="cityleft">
-                                <select class="select2">
-                                    <option>研会动态</option>
+                                <select name="Category" class="select2">
+                                @foreach (string str in NewsCategory.newsCategory[ViewData["Name"].ToString()])
+                                {
+                                    <option>@str</option>
+                                }
                                 </select>
                             </div>
                         </div>
@@ -114,7 +119,7 @@
                     <li>
                         <label>
                             新闻内容<b>*</b></label>
-                        <textarea id="content7" name="Detail" cols="100" rows="8" style="width: 700px; height: 250px;
+                        <textarea id="content7" name="Detail" cols="100" rows="8" style="width: 700px; height: 400px;
                             visibility: hidden;"></textarea>
                     </li>
                     <li>

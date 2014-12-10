@@ -23,6 +23,13 @@ namespace Graduate_Council.BLL
             List<NewInfo> list = newInfoDal.GetPageList(start, end, tableName);
             return list;
         }
+        public List<NewInfo> GetPageListByCat(int pageIndex, int pageSize, string tableName,string category)
+        {
+            int start = (pageIndex - 1) * pageSize + 1;
+            int end = pageSize * pageIndex;
+            List<NewInfo> list = newInfoDal.GetPageListByCat(start, end, tableName, category);
+            return list;
+        }
 
         public int GetPageCount(int pageSize,string tableName)
         {
@@ -47,6 +54,11 @@ namespace Graduate_Council.BLL
         public bool UpdateNewInfo(NewInfo newInfo, string tableName)
         {
             return newInfoDal.UpdateNewInfo(newInfo, tableName) > 0;
+        }
+        public void UpdatePageView(int pageView, string tableName,int id)
+        {
+            newInfoDal.UpdatePageView(pageView, tableName,id);
+            return;
         }
     }
 }

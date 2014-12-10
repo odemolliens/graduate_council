@@ -1,7 +1,8 @@
 ﻿<!DOCTYPE html>
+@using Graduate_Council.Model;
 <head> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>@ViewBag.Title</title>  
+  <title>西南石油大学研究生会</title>  
      <link href="../../Res/Index/css/main.css" rel="stylesheet" type="text/css" />
      <link href="../../Res/Index/css/home.css" rel="stylesheet" type="text/css" />
      <link href="../../Res/Index/css/style.css" rel="stylesheet" type="text/css" />
@@ -26,33 +27,33 @@
   <div class="nav">
   <ul>
     <li></li>
-    <li><a href="#">首页</a></li>
-    <li><a href="#">研会历程</a>
+    <li><a href="/">首页</a></li>
+    <li><a href="/Home/DisplayList?Name=CouncilExpNews">研会历程</a>
       <ul>
-        <li><a href="#">精品活动</a></li>
-        <li><a href="#">机构设置</a></li>
-        <li><a href="#">规章制度</a></li>
-        <li><a href="#">研会历史</a></li>
+        <li><a href="/Home/DisplayList?Name=CouncilExpNews&&Cat=1">精品活动</a></li>
+        <li><a href="/Home/DisplayList?Name=CouncilExpNews&&Cat=2">机构设置</a></li>
+        <li><a href="/Home/DisplayList?Name=CouncilExpNews&&Cat=3">规章制度</a></li>
+        <li><a href="/Home/DisplayList?Name=CouncilExpNews&&Cat=4">研会历史</a></li>
       </ul>
     </li>
-    <li><a href="#">信息前沿</a>
+    <li><a href="/Home/DisplayList?Name=FrontNews">信息前沿</a>
       <ul>
-        <li><a href="#">学术活动</a></li>
-        <li><a href="#">文体活动</a></li>
-        <li><a href="#">社会实践</a></li>
-        <li><a href="#">校园小记</a></li>
-        <li><a href="#">实时播报</a></li>
-        <li><a href="#">欢迎投稿</a></li>
+        <li><a href="/Home/DisplayList?Name=FrontNews&&Cat=1">学术活动</a></li>
+        <li><a href="/Home/DisplayList?Name=FrontNews&&Cat=2">文体活动</a></li>
+        <li><a href="/Home/DisplayList?Name=FrontNews&&Cat=3">社会实践</a></li>
+        <li><a href="/Home/DisplayList?Name=FrontNews&&Cat=4">校园小记</a></li>
+        <li><a href="/Home/DisplayList?Name=FrontNews&&Cat=5">实时播报</a></li>
+        <li><a href="/Home/DisplayList?Name=FrontNews&&Cat=6">欢迎投稿</a></li>
       </ul>
     </li>
-    <li><a href="#">分会动态</a>
+    <li><a href="/Home/DisplayList?Name=BranchNews">分会动态</a>
       <ul>
-        <li><a href="#">各分会名称</a></li>
-        <li><a href="#">分会实况</a></li>
-        <li><a href="#">分会链接</a></li>
+        <li><a href="/Home/DisplayList?Name=BranchNews&&Cat=1">各分会名称</a></li>
+        <li><a href="/Home/DisplayList?Name=BranchNews&&Cat=2">分会实况</a></li>
+        <li><a href="/Home/DisplayList?Name=BranchNews&&Cat=3">分会链接</a></li>
       </ul>
     </li>
-    <li><a href="#">通知公告</a></li>
+    <li><a href="/Home/DisplayList?Name=NoticeNews">通知公告</a></li>
     <li><a href="#">资料下载</a></li>
   </ul>
   </div>
@@ -85,36 +86,51 @@
           <img class="icon" src="/images/icon/box32.png" />
           <span>资料下载</span>
          </div> 
-         <ul> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
+         <ul>
+         @if (ViewData["listInfo"] != null)
+         {
+             foreach (LinkInfo linkInfo in (List<LinkInfo>)ViewData["listInfo"])
+             {
+                 if (linkInfo.Category == "资料下载")
+                 {
+          <li><a href="@linkInfo.Link">@linkInfo.Name</a></li>
+                 }
+             }
+         }            
          </ul> </td> 
         <td>
          <div class="title">
           <img class="icon" src="/images/icon/globe32.png" />
           <span>校内链接</span>
          </div> 
-         <ul> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
+         <ul>
+         @if (ViewData["listInfo"] != null)
+         {
+             foreach (LinkInfo linkInfo in (List<LinkInfo>)ViewData["listInfo"])
+             {
+                 if (linkInfo.Category == "校内链接")
+                 {
+          <li><a href="@linkInfo.Link">@linkInfo.Name</a></li>
+                 }
+             }
+         }  
          </ul></td> 
         <td>
          <div class="title">
           <img class="icon" src="/images/icon/refresh32.png" />
           <span>友情链接</span>
          </div> 
-         <ul> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
-          <li><a href="javascript:;">西南石油大学研究生证补办申请表</a></li> 
+         <ul>
+         @if (ViewData["listInfo"] != null)
+         {
+             foreach (LinkInfo linkInfo in (List<LinkInfo>)ViewData["listInfo"])
+             {
+                 if (linkInfo.Category == "友情链接")
+                 {
+          <li><a href="@linkInfo.Link">@linkInfo.Name</a></li>
+                 }
+             }
+         } 
          </ul></td> 
        </tr> 
       </tbody>

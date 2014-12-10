@@ -10,6 +10,7 @@ namespace Graduate_Council.Controllers
     public class AdminController : Controller
     {
         NewInfoService newInfoService = new NewInfoService();
+        LinkInfoService linkInfoService = new LinkInfoService();
         //
         // GET: /Admin/
 
@@ -146,6 +147,94 @@ namespace Graduate_Council.Controllers
                 return Content("no");
             }
 
+        }
+        public ActionResult LinkManage()
+        {
+            int pageIndex = Convert.ToInt32(Request["pageIndex"]);
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            int pageSize = 15;
+            int pageCount = linkInfoService.GetPageCount(pageSize);
+            pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+            List<LinkInfo> list = linkInfoService.GetLinkList(pageIndex, pageSize);
+            ViewData["list"] = list;
+            ViewData["pageCount"] = pageCount;
+            ViewData["pageIndex"] = pageIndex;
+            ViewData["pagePre"] = (pageIndex - 1) < 1 ? 1 : (pageIndex - 1);
+            ViewData["pageNext"] = (pageIndex + 1) > pageCount ? pageCount : (pageIndex + 1);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult AddLink()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddLink(LinkInfo linkInfo)
+        {
+            if (string.IsNullOrEmpty(linkInfo.Name))
+            {
+                return Content("请链接名称");
+            }
+            if (string.IsNullOrEmpty(linkInfo.Link))
+            {
+                return Content("请输入链接地址");
+            }
+            if (string.IsNullOrEmpty(linkInfo.Category))
+            {
+                return Content("请选择链接类别");
+            }
+            if (linkInfoService.AddLink(linkInfo))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+        public ActionResult EditLink()
+        {
+            int id = Convert.ToInt32(Request["Id"]);
+            id = id < 1 ? 1 : id;
+            LinkInfo linkInfo = linkInfoService.GetLink(id);
+            ViewData.Model = linkInfo;
+            return View();
+        }
+        public ActionResult UpdateLink(LinkInfo linkInfo)
+        {
+            if (string.IsNullOrEmpty(linkInfo.Name))
+            {
+                return Content("请链接名称");
+            }
+            if (string.IsNullOrEmpty(linkInfo.Link))
+            {
+                return Content("请输入链接地址");
+            }
+            if (string.IsNullOrEmpty(linkInfo.Category))
+            {
+                return Content("请选择链接类别");
+            }
+            if (linkInfoService.UpdateLink(linkInfo))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+
+        public ActionResult DeleteLink()
+        {
+            int id = Convert.ToInt32(Request["Id"]);
+            if (linkInfoService.DeleteLink(id))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
         }
     }
 }

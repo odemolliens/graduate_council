@@ -18,8 +18,28 @@ namespace Graduate_Council.DAL
         /// <returns></returns>
         public List<NewInfo> GetPageList(int start, int end,string tableName)
         {
-            string sql = "select * from (select row_number() over (order by Date) as num, * from "+tableName+") as t where t.num>=@start and t.num<=@end";
+            string sql = "select * from (select row_number() over (order by Date DESC) as num, * from " + tableName + ") as t where t.num>=@start and t.num<=@end";
             SqlParameter[] pars = { new SqlParameter("@start", start), new SqlParameter("@end", end)};
+            DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, pars);
+            List<NewInfo> newlist = null;
+            if (dt.Rows.Count > 0)
+            {
+                newlist = new List<NewInfo>();
+                NewInfo newInfo = null;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    newInfo = new NewInfo();
+                    LoadEntity(dr, newInfo);
+                    newlist.Add(newInfo);
+                }
+            }
+            return newlist;
+
+        }
+        public List<NewInfo> GetPageListByCat(int start, int end, string tableName, string category)
+        {
+            string sql = "select * from (select row_number() over (order by Date) as num, * from " + tableName + " where Category=@Category) as t where t.num>=@start and t.num<=@end";
+            SqlParameter[] pars = { new SqlParameter("@start", start), new SqlParameter("@end", end) ,new SqlParameter("@Category",category) };
             DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, pars);
             List<NewInfo> newlist = null;
             if (dt.Rows.Count > 0)
@@ -136,6 +156,22 @@ namespace Graduate_Council.DAL
             pars[5].Value = newInfo.Category;
             pars[6].Value = newInfo.PageView;
             return SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
+        }
+        /// <summary>
+        /// 更新PageView
+        /// </summary>
+        /// <param name="newInfo"></param>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public void UpdatePageView(int pageView, string tableName, int id)
+        {
+            string sql = "update " + tableName + " set PageView=@PageView where Id = @Id";
+            SqlParameter[] pars = {new SqlParameter("@PageView",SqlDbType.Int),
+                                  new SqlParameter("@Id",SqlDbType.Int)};
+            pars[0].Value = pageView;
+            pars[1].Value = id;
+            SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
+            return;
         }
     }
 }

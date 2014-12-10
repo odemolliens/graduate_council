@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>@ViewData["Msg"]</title>
+<title>链接管理</title>
     <link href="../../Res/Admin/css/style.css" rel="stylesheet" type="text/css" />
     <script src="../../Res/Admin/js/jquery.js" type="text/javascript"></script>
     <script src="../../Scripts/jquery-1.8.2.min.js" type="text/javascript"></script>    
@@ -14,16 +14,16 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".click").click(function () {
-            window.location.href="/Admin/AddNewInfo?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
+            window.location.href="/Admin/AddLink";
         });
         $(".deleteNews").click(function () {
-            deleteNew($(this).attr("ids"),$(this).attr("name"),$(this));
+            deleteNew($(this).attr("ids"),$(this));
         })
 
     });    
-    function deleteNew(id, name,control) {
-        if (confirm("确定要删除这条信息吗？")) {
-            $.post("/Admin/DeleteNewInfo", { "id": id, "Name": name }, function (data) {
+    function deleteNew(id,control) {
+        if (confirm("确定要删除这条链接吗？")) {
+            $.post("/Admin/DeleteLink", { "id": id }, function (data) {
                 if (data == "ok") {
                     $(control).parent().parent().remove();
                     alert("删除成功");
@@ -45,8 +45,7 @@
 	<div class="place">
     <span>位置：</span>
     <ul class="placeul">
-    <li>新闻管理</li>
-    <li>@ViewData["Msg"]</li>
+    <li>链接管理</li>
     </ul>
     </div>
     
@@ -55,7 +54,7 @@
     <div class="tools">
     
     	<ul class="toolbar">
-        <li class="click"><span><img src="/images/t01.png" /></span><a href="/Admin/AddNewInfo?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" target="_self">添加新闻</a></li>
+        <li class="click"><span><img src="/images/t01.png" /></span><a href="/Admin/AddLink" target="_self">添加链接</a></li>
         </ul>
     </div>
     
@@ -64,27 +63,23 @@
     	<thead>
     	<tr>
         <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
-        <th>标题</th>
-        <th>来源</th>
-        <th>类别</th>
-        <th>发布时间</th>
-        <th>访问量</th>
+        <th>链接名称</th>
+        <th>链接地址</th>
+        <th>链接类别</th>
         <th>操作</th>
         </tr>
         </thead>
         <tbody>
         @if (ViewData["list"] != null)
         {
-        foreach (NewInfo newInfo in (List<NewInfo>)ViewData["list"])
+        foreach (LinkInfo linkInfo in (List<LinkInfo>)ViewData["list"])
         {
         <tr>
-        <td>@newInfo.Id</td>
-        <td>@newInfo.Title</td>
-        <td>@newInfo.Author</td>
-        <td>@newInfo.Category</td>
-        <td>@newInfo.SubDateTime</td>
-        <td>@newInfo.PageView</td>
-        <td><a href="/Admin/EditNew?Id=@newInfo.Id&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" class="tablelink">查看</a>     <a href="javascript:void(0)" class="deleteNews" name="@ViewData["Name"]" ids="@newInfo.Id"> 删除</a></td>
+        <td>@linkInfo.Id</td>        
+        <td>@linkInfo.Name</td>
+        <td>@linkInfo.Link</td>
+        <td>@linkInfo.Category</td>
+        <td><a href="/Admin/EditLink?Id=@linkInfo.Id" class="tablelink">查看</a>     <a href="javascript:void(0)" class="deleteNews" ids="@linkInfo.Id"> 删除</a></td>
         </tr>
         } 
         }
@@ -96,7 +91,7 @@
     <div class="pagin">
     	<div class="message">共<i class="blue">@ViewData["pageCount"]</i>页，当前显示第&nbsp;<i class="blue">@ViewData["pageIndex"]&nbsp;</i>页</div>
         <ul class="paginList">
-        <li class="paginItem"><a href="?PageIndex=@ViewData["pagePre"]&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]"><span class="pagepre"></span></a></li>
+        <li class="paginItem"><a href="?PageIndex=@ViewData["pagePre"]"><span class="pagepre"></span></a></li>
         @for (int i = 1; i <= (int)ViewData["pageCount"]; i++)
         {
             if (i == (int)ViewData["pageIndex"])
@@ -105,15 +100,15 @@
             }
             else
             {
-                <li class="paginItem"><a href="?PageIndex=@i&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]">@i</a></li> 
+                <li class="paginItem"><a href="?PageIndex=@i">@i</a></li> 
             }
         }
-        <li class="paginItem"><a href="?PageIndex=@ViewData["pageNext"]&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]"><span class="pagenxt"></span></a></li>
+        <li class="paginItem"><a href="?PageIndex=@ViewData["pageNext"]"><span class="pagenxt"></span></a></li>
         </ul>
     </div>
     
     
-    <div class="tip">
+    @*<div class="tip">
     	<div class="tiptop"><span>提示信息</span><a></a></div>
         
       <div class="tipinfo">
@@ -139,7 +134,7 @@
     <script type="text/javascript">
         $('.tablelist tbody tr:odd').addClass('odd');
 	</script>
-
+*@
 </body>
 
 </html>

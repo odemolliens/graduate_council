@@ -7,7 +7,7 @@ using Graduate_Council.BLL;
 using Graduate_Council.Model;
 namespace Graduate_Council.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         NewInfoService newInfoService = new NewInfoService();
         LinkInfoService linkInfoService = new LinkInfoService();

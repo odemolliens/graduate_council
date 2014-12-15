@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BannerImg.cs" />
     <Compile Include="LinkInfo.cs" />
     <Compile Include="NewInfo.cs" />
     <Compile Include="NewsCategory.cs" />

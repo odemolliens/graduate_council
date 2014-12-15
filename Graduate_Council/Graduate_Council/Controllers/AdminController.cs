@@ -5,12 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using Graduate_Council.BLL;
 using Graduate_Council.Model;
+using System.IO;
 namespace Graduate_Council.Controllers
 {
     public class AdminController : BaseController
     {
         NewInfoService newInfoService = new NewInfoService();
         LinkInfoService linkInfoService = new LinkInfoService();
+        BannerImgService bannerImgService = new BannerImgService();
         //
         // GET: /Admin/
 
@@ -228,6 +230,115 @@ namespace Graduate_Council.Controllers
         {
             int id = Convert.ToInt32(Request["Id"]);
             if (linkInfoService.DeleteLink(id))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+
+        public ActionResult BannerManage()
+        {
+            int pageIndex = Convert.ToInt32(Request["pageIndex"]);
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            int pageSize = 6;
+            int pageCount = bannerImgService.GetPageCount(pageSize);
+            pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+            List<BannerImg> list = bannerImgService.GetBannerList(pageIndex, pageSize);
+            ViewData["list"] = list;
+            ViewData["pageCount"] = pageCount;
+            ViewData["pageIndex"] = pageIndex;
+            ViewData["pagePre"] = (pageIndex - 1) < 1 ? 1 : (pageIndex - 1);
+            ViewData["pageNext"] = (pageIndex + 1) > pageCount ? pageCount : (pageIndex + 1);
+            return View();
+        }
+        public ActionResult DeleteBanner()
+        {
+            int id = Convert.ToInt32(Request["Id"]);
+            if (bannerImgService.DeleteBanner(id))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+        public ActionResult EditBanner()
+        {
+            int id = Convert.ToInt32(Request["Id"]);
+            id = id < 1 ? 1 : id;
+            BannerImg bannerImg = bannerImgService.GetBanner(id);
+            ViewData.Model = bannerImg;
+            return View();
+        }
+        #region 上传文件
+        public ActionResult FileUpload()
+        {
+            HttpPostedFileBase postFile = Request.Files["uploadImg"];
+            if (postFile == null)
+            {
+                return Content("no:请选择文件！");
+            }
+            else
+            {
+                string fileName = Path.GetFileName(postFile.FileName);
+                string fileExt = Path.GetExtension(fileName);
+                if ((fileExt == ".jpg")||(fileExt == ".png"))
+                {
+                    //string dir = "/Img/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + DateTime.Now.Day + "/";
+                    //Directory.CreateDirectory(Path.GetDirectoryName(Request.MapPath(dir)));//创建文件夹
+                    string newFileName = Guid.NewGuid().ToString();
+                    string fullDir = "/images/banner/" + newFileName + fileExt;//文件的完整路径
+                    postFile.SaveAs(Request.MapPath(fullDir));
+                    return Content("ok:" + fullDir);
+                }
+                else
+                {
+                    return Content("no:文件格式不正确！");
+                }
+            }
+        }
+        #endregion
+
+        public ActionResult UpdateBanner(BannerImg bannerImg)
+        {
+            if (Request["IsVisible"].ToString() == "on")
+            {
+                bannerImg.IsVisible = true;
+            }
+            if (bannerImg.Path == null)
+            {
+                return Content("请先选择图片并上传！");
+            }
+            if (bannerImgService.UpdateBanner(bannerImg))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+        [HttpGet]
+        public ActionResult AddBanner()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddBanner(BannerImg bannerImg)
+        {
+            if (Request["IsVisible"].ToString() == "on")
+            {
+                bannerImg.IsVisible = true;
+            }
+            if (bannerImg.Path == null)
+            {
+                return Content("请先选择图片并上传！");
+            }
+            if (bannerImgService.AddBanner(bannerImg))
             {
                 return Content("ok");
             }

@@ -9,7 +9,14 @@
     <div class="content"> 
     <div class="row">
     <div class="main-top-img">
+    @if (ViewData["banner"] == null)
+    {
         <img src="/images/banner/banner1.png" alt="banner1.png" style="width:100%;height:200px;"/>
+    }
+    else
+    {
+         <img src="@ViewData["banner"]" alt="banner1.png" style="width:100%;height:200px;"/>
+    }
       </div>
       </div>
 

@@ -8,12 +8,20 @@
       <div class="row">
         <div class="home-left-banner"> 
         <div id="myFocus"> 
-         <div class="pic"> 
-          <ul class="focus"> 
-           <li><a href="javascript:;"><img src="/images/banner/banner1.png" thumb="" text="" /></a></li> 
-           <li><a href="javascript:;"><img src="/images/banner/banner4.png" thumb="" text="" /></a></li> 
-           <li><a href="javascript:;"><img src="/images/banner/banner5.png" thumb="" text="" /></a></li> 
-          </ul> 
+         <div class="pic">
+         <ul class="focus">
+         @if (ViewData["bannerList"] != null)
+         {
+             foreach (BannerImg banner in (List<BannerImg>)ViewData["bannerList"])
+             {                 
+                <li><a href="javascript:;"><img src="@banner.Path" thumb="" text="" /></a></li>  
+             }
+         }
+         else
+         {
+             <li><a href="javascript:;"><img src="" alt="无图片"/></a></li> 
+         }         
+             </ul> 
          </div> 
         </div> 
        </div> 
@@ -54,12 +62,12 @@
         <div class="title" style="color:#2B6377;"><img src="/images/icon/pictures32.png" />校园油记</div>
         <table class="list-table">
        @foreach (NewInfo newInfo in (List<NewInfo>)ViewData["list3"])
-        {
+       {
           <tr>
             <th><a href="/Home/DisplayNews?Id=@newInfo.Id&&Name=CampusEssay">@newInfo.Title</a></th>
             <td>@newInfo.SubDateTime.ToShortDateString()</td>       
           </tr>
-        }
+       }
         </table>
         </div>
         <div class="home-box" style="margin-left:20px;">
@@ -82,12 +90,12 @@
         <div class="title" style="color:#3B8AD6;"><img src="/images/icon/info32.png" />分会动态</div>
         <table class="list-table">
           @foreach (NewInfo newInfo in (List<NewInfo>)ViewData["list5"])
-        {
+          {
           <tr>
             <th><a href="/Home/DisplayNews?Id=@newInfo.Id&&Name=BranchNews">@newInfo.Title</a></th>
             <td>@newInfo.SubDateTime.ToShortDateString()</td>
           </tr>
-        }
+          }
         </table>
         </div>
         <div class="home-box" style="margin-left:20px;">
@@ -95,7 +103,7 @@
         <div class="title" style="color:#D86B21;"><img src="/images/icon/statistics32.png" />就业信息</div>
         <table class="list-table">
           @foreach (NewInfo newInfo in (List<NewInfo>)ViewData["list6"])
-        {
+          {
           <tr>
             <th><a href="/Home/DisplayNews?Id=@newInfo.Id&&Name=JobNews">@newInfo.Title</a></th>
             <td>@newInfo.SubDateTime.ToShortDateString()</td>

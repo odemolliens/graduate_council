@@ -14,6 +14,7 @@ namespace Graduate_Council.Controllers
         // GET: /Home/
         NewInfoService newInfoService = new NewInfoService();
         LinkInfoService linkInfoService = new LinkInfoService();
+        BannerImgService bannerImgService = new BannerImgService();
         public ActionResult Index()
         {
 
@@ -24,7 +25,9 @@ namespace Graduate_Council.Controllers
             List<NewInfo> list5 = newInfoService.GetPageList(1, 6, "T_BranchNews");
             List<NewInfo> list6 = newInfoService.GetPageList(1, 6, "T_JobNews");
             List<LinkInfo> listInfo = linkInfoService.Top15Link();
+            List<BannerImg> bannerList = bannerImgService.GetIndexBannerList();
             ViewData["listInfo"] = listInfo;
+            ViewData["bannerList"] = bannerList;
             ViewData["list1"] = list1;
             ViewData["list2"] = list2;
             ViewData["list3"] = list3;
@@ -36,6 +39,15 @@ namespace Graduate_Council.Controllers
 
         public ActionResult DisplayNews()
         {
+            List<BannerImg> bannerList = bannerImgService.GetIndexBannerList();            
+            Random random = new Random();
+            int flag = random.Next(0, bannerList.Count);
+            if (bannerList != null)
+            {
+                ViewData["banner"] = bannerList[flag].Path;
+            }
+            List<LinkInfo> listInfo = linkInfoService.Top15Link();
+            ViewData["listInfo"] = listInfo;
             int id = Convert.ToInt32(Request["Id"]);
             string tableName = "T_" + Request["Name"];
             NewInfo newInfo = newInfoService.GetNewInfo(id, tableName);
@@ -47,6 +59,15 @@ namespace Graduate_Council.Controllers
         }
         public ActionResult DisplayList()
         {
+            List<BannerImg> bannerList = bannerImgService.GetIndexBannerList();
+            Random random = new Random();
+            int flag = random.Next(0, bannerList.Count);
+            if (bannerList != null)
+            {
+                ViewData["banner"] = bannerList[flag].Path;
+            }
+            List<LinkInfo> listInfo = linkInfoService.Top15Link();
+            ViewData["listInfo"] = listInfo;
             string tableName = "T_" + Request["Name"];
             ViewData["Name"] = Request["Name"];
             int pageIndex = Convert.ToInt32(Request["pageIndex"]) < 1?1:Convert.ToInt32(Request["pageIndex"]);

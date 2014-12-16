@@ -86,5 +86,34 @@ namespace Graduate_Council.Controllers
             }
             return View();
         }
+        public ActionResult DisplayDownloadList()
+        {
+            List<BannerImg> bannerList = bannerImgService.GetIndexBannerList();
+            Random random = new Random();
+            int flag = random.Next(0, bannerList.Count);
+            if (bannerList != null)
+            {
+                ViewData["banner"] = bannerList[flag].Path;
+            }
+            List<LinkInfo> listInfo = linkInfoService.Top15Link();
+            ViewData["listInfo"] = listInfo;
+            string tableName = "T_" + Request["Name"];
+            ViewData["Name"] = Request["Name"];
+            int pageIndex = Convert.ToInt32(Request["pageIndex"]) < 1 ? 1 : Convert.ToInt32(Request["pageIndex"]);
+            if (string.IsNullOrEmpty(Request["Cat"]))
+            {
+                List<NewInfo> list = newInfoService.GetPageList(pageIndex, 13, tableName);
+                ViewData["list"] = list;
+            }
+            else
+            {
+                int cat = Convert.ToInt32(Request["Cat"]) < 1 ? 1 : Convert.ToInt32(Request["Cat"]);
+                cat--;
+                string category = NewsCategory.newsCategory[Request["Name"].ToString()][cat];
+                List<NewInfo> list = newInfoService.GetPageListByCat(pageIndex, 13, tableName, category);
+                ViewData["list"] = list;
+            }
+            return View();
+        }
     }
 }

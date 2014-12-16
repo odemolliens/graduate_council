@@ -72,6 +72,12 @@ namespace Graduate_Council.Controllers
             ViewData["Msg"] = Request["Msg"];
             return View();
         }
+        public ActionResult AddDataDownload()
+        {
+            ViewData["Name"] = Request["Name"];
+            ViewData["Msg"] = Request["Msg"];
+            return View();
+        }
         /// <summary>
         /// 添加新闻
         /// </summary>
@@ -302,6 +308,31 @@ namespace Graduate_Council.Controllers
             }
         }
         #endregion
+        public ActionResult FileUploadData()
+        {
+            HttpPostedFileBase postFile = Request.Files["uploadData"];
+            if (postFile == null)
+            {
+                return Content("no:请选择文件！");
+            }
+            else
+            {
+                string fileName = Path.GetFileName(postFile.FileName);
+                string fileExt = Path.GetExtension(fileName);
+                if ((fileExt == ".doc") || (fileExt == ".docx")||(fileExt == ".zip") ||(fileExt == ".rar") ||(fileExt == ".xls") ||(fileExt == ".xlsx"))
+                {
+                    string dir = "/DataDownload/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+                    Directory.CreateDirectory(Path.GetDirectoryName(Request.MapPath(dir)));//创建文件夹
+                    string fullDir = dir + fileName;//文件的完整路径
+                    postFile.SaveAs(Request.MapPath(fullDir));
+                    return Content("ok:" + fullDir);
+                }
+                else
+                {
+                    return Content("no:文件格式不正确！");
+                }
+            }
+        }
 
         public ActionResult UpdateBanner(BannerImg bannerImg)
         {

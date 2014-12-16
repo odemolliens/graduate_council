@@ -152,6 +152,7 @@
     <Content Include="images\d06.png" />
     <Content Include="images\d07.png" />
     <Content Include="images\diskbg.png" />
+    <Content Include="images\download.png" />
     <Content Include="images\dp.png" />
     <Content Include="images\erweima\sdyjs.jpg" />
     <Content Include="images\erweima\xywy.jpg" />
@@ -656,6 +657,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\AddBanner.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\AddDataDownload.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\DisplayDownloadList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -14,7 +14,8 @@ namespace Graduate_Council.Model
             {"CampusEssay",new List<string>(){"校园油记"}},
             {"NoticeNews",new List<string>(){"通知公告"}},
             {"JobNews",new List<string>(){"就业信息"}},
-            {"CouncilExpNews",new List<string>(){"精品活动","结构设置","规章制度","研会历史"}}
+            {"CouncilExpNews",new List<string>(){"精品活动","结构设置","规章制度","研会历史"}},
+            {"DataDownload",new List<string>(){"资料下载"}}
         };
         public static Dictionary<string, string> totalCategory = new Dictionary<string, string>() { 
             {"FrontNews","信息前沿"},
@@ -23,7 +24,8 @@ namespace Graduate_Council.Model
             {"CouncilExpNews","研会历程"},
             {"JobNews","就业信息"},
             {"CampusEssay","校园油记"},
-            {"CouncilDynamicNews","研会动态"}
+            {"CouncilDynamicNews","研会动态"},
+            {"DataDownload","资料下载"}
         };
     }
 }

@@ -342,7 +342,7 @@ namespace Graduate_Council.Controllers
             }
             if (bannerImg.Path == null)
             {
-                return Content("请先选择图片并上传！");
+                bannerImg.Path = Request["Path1"].ToString();
             }
             if (bannerImgService.UpdateBanner(bannerImg))
             {

@@ -9,13 +9,13 @@
     <div class="row">
     <div class="main-top-img">
      @if (ViewData["banner"] == null)
-    {
+     {
         <img src="/images/banner/banner2.png" alt="banner1.png" style="width:100%;height:200px;"/>
-    }
-    else
-    {
+     }
+     else
+     {
          <img src="@ViewData["banner"]" alt="banner1.png" style="width:100%;height:200px;"/>
-    }
+     }
       </div>
       </div>
 
@@ -36,7 +36,6 @@
       </ul>
      </div>
       <div class="main-page"> 
-     <!--  <div class="path">研会历程&nbsp;/&nbsp;精品活动</div> -->
      @if (ViewData["list"] != null)
      {
         <table class="news-list" >
@@ -62,6 +61,54 @@
      else
      {
          <p>暂时没有新闻 </p>
+     }
+     @if (ViewData["Cat"] == null)
+     {
+     <div class="pagin">
+            <div class="message">           
+                共<i class="blue">@ViewData["pageCount"]</i>页，当前显示第&nbsp;<i class="blue">@ViewData["pageIndex"]&nbsp;</i>页</div>
+            <ul class="paginList">
+                <li class="paginItem"><a href="?PageIndex=@ViewData["pagePre"]&&Name=@ViewData["Name"]">
+                    <span class="pagepre"></span></a></li>
+                @for (int j = 1; j <= (int)ViewData["pageCount"]; j++)
+                {
+                    if (j == (int)ViewData["pageIndex"])
+                    {            
+                    <li class="paginItem current"><a href="javascript:void(0)">@j</a></li>
+                    }
+                    else
+                    {
+                    <li class="paginItem"><a href="?PageIndex=@j&&Name=@ViewData["Name"]">@j</a></li> 
+                    }
+                }
+                <li class="paginItem"><a href="?PageIndex=@ViewData["pageNext"]&&Name=@ViewData["Name"]">
+                    <span class="pagenxt"></span></a></li>
+            </ul>
+        </div>
+     }
+     else
+     {
+          <div class="pagin">
+            <div class="message">           
+                共<i class="blue">@ViewData["pageCount"]</i>页，当前显示第&nbsp;<i class="blue">@ViewData["pageIndex"]&nbsp;</i>页</div>
+            <ul class="paginList">
+                <li class="paginItem"><a href="?PageIndex=@ViewData["pagePre"]&&Name=@ViewData["Name"]&&Cat=@ViewData["Cat"]">
+                    <span class="pagepre"></span></a></li>
+                @for (int j = 1; j <= (int)ViewData["pageCount"]; j++)
+                {
+                    if (j == (int)ViewData["pageIndex"])
+                    {            
+                    <li class="paginItem current"><a href="javascript:void(0)">@j</a></li>
+                    }
+                    else
+                    {
+                    <li class="paginItem"><a href="?PageIndex=@j&&Name=@ViewData["Name"]&&Cat=@ViewData["Cat"]">@j</a></li> 
+                    }
+                }
+                <li class="paginItem"><a href="?PageIndex=@ViewData["pageNext"]&&Name=@ViewData["Name"]&&Cat=@ViewData["Cat"]">
+                    <span class="pagenxt"></span></a></li>
+            </ul>
+        </div>
      }
        </div>
      </div> 

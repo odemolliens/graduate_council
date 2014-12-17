@@ -35,11 +35,11 @@
         })
         function AfterSuccess(data) {
             if (data == "ok") {
-                alert("重新上传成功！");
+                alert("图片修改成功！");
                 window.location.href = "/Admin/BannerManage";
             }
             else if (data == "no") {
-                alert("上传失败失败！");
+                alert("图片修改失败！");
             }
             else {
                 alert(data);
@@ -100,7 +100,7 @@
                     <li>
                         <label>
                             请选择图片<b>*</b></label>
-                       <input type="file" id="uploadImg" name="uploadImg" class="dfinput"/><input type="button" id="upLoadbtn" value="上传图片" class="dfinput"/></li>                    
+                       <input type="file" id="uploadImg" name="uploadImg" /><input type="button" id="upLoadbtn" value="上传图片" class="btn"/></li>                    
                     <li>                    
                     <div id="showImg"></div>
                     </li>
@@ -108,15 +108,17 @@
                     }
                     @using (Ajax.BeginForm("UpdateBanner", new AjaxOptions() { HttpMethod = "post", OnSuccess = "AfterSuccess" }))
                     {
-                    <ul>                                           
+                    <ul class="forminfo">                                           
                     <li><label>
-                            是否显示图片<b>*</b></label><input name="IsVisible" type="checkbox" class="dfinput"/>显示图片请勾选</li>                    
+                            是否显示图片<b>*</b></label> &nbsp;&nbsp;&nbsp;<input name="IsVisible" type="checkbox" style="width:15px;height:15px;margin-right:10px;cursor:pointer;" />显示图片请勾选</li>                    
+                    <br /><br />
                     <li>
                         <label>
-                            &nbsp;</label><input type="submit" class="btn" value="修改图片" /><label>                            
+                            &nbsp;</label><input type="submit" class="btn" value="修改图片" /><label>&nbsp;&nbsp;&nbsp;                            
                             &nbsp;</label><input type="button" class="btn" onclick="exit()" value="退出"/> </li>                                        
                         </ul>
                         <input type="hidden" name="Id" value="@Model.Id" />
+                        <input type="hidden" name="Path1" value="@Model.Path" />
                         <div id="hide"></div>
                     }                                                        
             </div>            

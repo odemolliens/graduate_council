@@ -37,6 +37,12 @@ namespace Graduate_Council.BLL
             int pageCount = Convert.ToInt32(Math.Ceiling((double)recordCount / pageSize));
             return pageCount;
         }
+        public int GetPageCountByCat(int pageSize, string tableName,string category)
+        {
+            int recordCount = newInfoDal.GetRecordCountByCat(tableName,category);
+            int pageCount = Convert.ToInt32(Math.Ceiling((double)recordCount / pageSize));
+            return pageCount;
+        }
 
         public NewInfo GetNewInfo(int id,string tableName)
         {

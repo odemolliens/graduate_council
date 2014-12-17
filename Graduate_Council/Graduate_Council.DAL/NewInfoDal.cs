@@ -76,6 +76,12 @@ namespace Graduate_Council.DAL
             string sql = "select count(*) from " + tableName;            
             return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text));
         }
+        public int GetRecordCountByCat(string tableName,string category)
+        {
+            string sql = "select count(*) from " + tableName + " where Category=@Category";
+            SqlParameter par = new SqlParameter("@Category", category);
+            return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text,par));
+        }
         /// <summary>
         /// 获取一条记录
         /// </summary>

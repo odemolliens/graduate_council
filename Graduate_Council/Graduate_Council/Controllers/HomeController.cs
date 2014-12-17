@@ -71,18 +71,32 @@ namespace Graduate_Council.Controllers
             string tableName = "T_" + Request["Name"];
             ViewData["Name"] = Request["Name"];
             int pageIndex = Convert.ToInt32(Request["pageIndex"]) < 1?1:Convert.ToInt32(Request["pageIndex"]);
+            int pageSize = 2;
             if (string.IsNullOrEmpty(Request["Cat"]))
             {
-                List<NewInfo> list = newInfoService.GetPageList(pageIndex, 13, tableName);
+                int pageCount = newInfoService.GetPageCount(pageSize, tableName);
+                pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+                List<NewInfo> list = newInfoService.GetPageList(pageIndex, pageSize, tableName);                                
                 ViewData["list"] = list;
+                ViewData["pageCount"] = pageCount;
+                ViewData["pageIndex"] = pageIndex;
+                ViewData["pagePre"] = (pageIndex - 1) < 1 ? 1 : (pageIndex - 1);
+                ViewData["pageNext"] = (pageIndex + 1) > pageCount ? pageCount : (pageIndex + 1);
             }
             else
             {
                 int cat = Convert.ToInt32(Request["Cat"]) < 1 ? 1 : Convert.ToInt32(Request["Cat"]);
                 cat--;
                 string category = NewsCategory.newsCategory[Request["Name"].ToString()][cat];
-                List<NewInfo> list = newInfoService.GetPageListByCat(pageIndex, 13, tableName,category);
+                int pageCount = newInfoService.GetPageCountByCat(pageSize, tableName, category);
+                pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+                List<NewInfo> list = newInfoService.GetPageListByCat(pageIndex, pageSize, tableName,category);
+                ViewData["Cat"] = Request["Cat"];
                 ViewData["list"] = list;
+                ViewData["pageCount"] = pageCount;
+                ViewData["pageIndex"] = pageIndex;
+                ViewData["pagePre"] = (pageIndex - 1) < 1 ? 1 : (pageIndex - 1);
+                ViewData["pageNext"] = (pageIndex + 1) > pageCount ? pageCount : (pageIndex + 1);
             }
             return View();
         }
@@ -100,18 +114,32 @@ namespace Graduate_Council.Controllers
             string tableName = "T_" + Request["Name"];
             ViewData["Name"] = Request["Name"];
             int pageIndex = Convert.ToInt32(Request["pageIndex"]) < 1 ? 1 : Convert.ToInt32(Request["pageIndex"]);
+            int pageSize = 2;
             if (string.IsNullOrEmpty(Request["Cat"]))
             {
-                List<NewInfo> list = newInfoService.GetPageList(pageIndex, 13, tableName);
+                int pageCount = newInfoService.GetPageCount(pageSize, tableName);
+                pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+                List<NewInfo> list = newInfoService.GetPageList(pageIndex, pageSize, tableName);
                 ViewData["list"] = list;
+                ViewData["pageCount"] = pageCount;
+                ViewData["pageIndex"] = pageIndex;
+                ViewData["pagePre"] = (pageIndex - 1) < 1 ? 1 : (pageIndex - 1);
+                ViewData["pageNext"] = (pageIndex + 1) > pageCount ? pageCount : (pageIndex + 1);
             }
             else
             {
                 int cat = Convert.ToInt32(Request["Cat"]) < 1 ? 1 : Convert.ToInt32(Request["Cat"]);
                 cat--;
                 string category = NewsCategory.newsCategory[Request["Name"].ToString()][cat];
-                List<NewInfo> list = newInfoService.GetPageListByCat(pageIndex, 13, tableName, category);
+                int pageCount = newInfoService.GetPageCountByCat(pageSize, tableName, category);
+                pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+                List<NewInfo> list = newInfoService.GetPageListByCat(pageIndex, pageSize, tableName, category);
+                ViewData["Cat"] = Request["Cat"];
                 ViewData["list"] = list;
+                ViewData["pageCount"] = pageCount;
+                ViewData["pageIndex"] = pageIndex;
+                ViewData["pagePre"] = (pageIndex - 1) < 1 ? 1 : (pageIndex - 1);
+                ViewData["pageNext"] = (pageIndex + 1) > pageCount ? pageCount : (pageIndex + 1);
             }
             return View();
         }

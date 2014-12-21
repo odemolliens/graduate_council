@@ -6,25 +6,17 @@ using System.Web.Mvc;
 
 namespace Graduate_Council.Controllers
 {
-    public class BaseController : Controller
+    public class UserBaseController : Controller
     {
         //
-        // GET: /Base/
+        // GET: /UserBase/
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (Session["UserInfo"] == null)
             {
                 filterContext.HttpContext.Response.Redirect("/Login/Index");
-            }
-            else
-            {
-                Model.UserInfo userInfo = (Model.UserInfo)Session["UserInfo"];
-                if (!userInfo.Admin)
-                {
-                    filterContext.HttpContext.Response.Redirect("/Login/Index");
-                }
-
-            }
+            }            
             base.OnActionExecuting(filterContext);
         }
 

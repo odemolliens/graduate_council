@@ -14,5 +14,6 @@ namespace Graduate_Council.Model
         public DateTime SubDateTime { get; set; }
         public string Category { get; set; }
         public int PageView { get; set; }
+        public bool IsDisplay { get; set; }
     }
 }

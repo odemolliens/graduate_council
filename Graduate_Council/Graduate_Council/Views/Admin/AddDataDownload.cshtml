@@ -43,7 +43,7 @@
                         success: function (data) {
                             var serverDate = data.split(':');
                             if (serverDate[0] == "ok") {
-                                $("#Detail").val(+ serverDate[1]);
+                                $("#Detail").val(serverDate[1]);
                                 $("#hide").append("<a href='#'>" + serverDate[1] + "</a>");
                                 alert("文件上传成功，请继续添加新闻");                              
                             }
@@ -129,6 +129,8 @@
                             </div>
                         </div>
                     </li>
+                    <li><label>
+                            显示新闻<b>*</b></label> &nbsp;&nbsp;&nbsp;<input name="IsDisplay" type="checkbox" style="width:15px;height:15px;margin-right:10px;cursor:pointer;" />显示新闻到主页请勾选</li><br /><br />
                     <li>
                         <label>
                             新闻内容<b>*</b></label><div id="hide"></div>

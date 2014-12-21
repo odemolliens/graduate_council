@@ -36,10 +36,30 @@ namespace Graduate_Council.DAL
             return newlist;
 
         }
+        public List<NewInfo> GetDisplayPageList(int start, int end, string tableName)
+        {
+            string sql = "select * from (select row_number() over (order by Date DESC) as num, * from " + tableName + " where IsDisplay=@IsDisplay) as t where t.num>=@start and t.num<=@end";
+            SqlParameter[] pars = { new SqlParameter("@start", start), new SqlParameter("@end", end), new SqlParameter("@IsDisplay",true) };
+            DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, pars);
+            List<NewInfo> newlist = null;
+            if (dt.Rows.Count > 0)
+            {
+                newlist = new List<NewInfo>();
+                NewInfo newInfo = null;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    newInfo = new NewInfo();
+                    LoadEntity(dr, newInfo);
+                    newlist.Add(newInfo);
+                }
+            }
+            return newlist;
+
+        }
         public List<NewInfo> GetPageListByCat(int start, int end, string tableName, string category)
         {
-            string sql = "select * from (select row_number() over (order by Date) as num, * from " + tableName + " where Category=@Category) as t where t.num>=@start and t.num<=@end";
-            SqlParameter[] pars = { new SqlParameter("@start", start), new SqlParameter("@end", end) ,new SqlParameter("@Category",category) };
+            string sql = "select * from (select row_number() over (order by Date) as num, * from " + tableName + " where Category=@Category and IsDisplay=@IsDisplay) as t where t.num>=@start and t.num<=@end";
+            SqlParameter[] pars = { new SqlParameter("@start", start), new SqlParameter("@end", end) ,new SqlParameter("@Category",category),new SqlParameter("@IsDisplay",true) };
             DataTable dt = SqlHelper.GetTable(sql, CommandType.Text, pars);
             List<NewInfo> newlist = null;
             if (dt.Rows.Count > 0)
@@ -66,6 +86,7 @@ namespace Graduate_Council.DAL
             newInfo.Detail = dr["Detail"].ToString();
             newInfo.Category = dr["Category"].ToString();
             newInfo.PageView = Convert.ToInt32(dr["PageView"]);
+            newInfo.IsDisplay = Convert.ToBoolean(dr["IsDisplay"]);
         }
         /// <summary>
         /// 获取记录数
@@ -76,11 +97,17 @@ namespace Graduate_Council.DAL
             string sql = "select count(*) from " + tableName;            
             return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text));
         }
+        public int GetDisplayRecordCount(string tableName)
+        {
+            string sql = "select count(*) from " + tableName + " where IsDisplay=@IsDisplay";
+            SqlParameter par = new SqlParameter("@IsDisplay", true);
+            return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text, par));
+        }
         public int GetRecordCountByCat(string tableName,string category)
         {
-            string sql = "select count(*) from " + tableName + " where Category=@Category";
-            SqlParameter par = new SqlParameter("@Category", category);
-            return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text,par));
+            string sql = "select count(*) from " + tableName + " where Category=@Category and IsDisplay=@IsDisplay";
+            SqlParameter[] pars = {new SqlParameter("@Category", category),new SqlParameter("@IsDisplay",true)};
+            return Convert.ToInt32(SqlHelper.ExecuteScalar(sql, CommandType.Text,pars));
         }
         /// <summary>
         /// 获取一条记录
@@ -120,13 +147,14 @@ namespace Graduate_Council.DAL
         /// <returns></returns>
         public int AddNewInfo(NewInfo newInfo,string tableName)
         {
-            string sql = "insert into "+tableName+"(Title,Author,Detail,Date,Category,PageView) values(@Title,@Author,@Detail,@Date,@Category,@PageView)";
+            string sql = "insert into " + tableName + "(Title,Author,Detail,Date,Category,PageView,IsDisplay) values(@Title,@Author,@Detail,@Date,@Category,@PageView,@IsDisplay)";
             SqlParameter[] pars = {new SqlParameter("@Title",SqlDbType.NVarChar,50),
                                   new SqlParameter("@Author",SqlDbType.NVarChar,50),
                                   new SqlParameter("@Detail",SqlDbType.NVarChar),
                                   new SqlParameter("@Date",SqlDbType.SmallDateTime),
                                   new SqlParameter("@Category",SqlDbType.NVarChar,50),
-                                  new SqlParameter("@PageView",SqlDbType.Int)
+                                  new SqlParameter("@PageView",SqlDbType.Int),
+                                  new SqlParameter("@IsDisplay",SqlDbType.Bit)
                                   };
             pars[0].Value = newInfo.Title;
             pars[1].Value = newInfo.Author;
@@ -134,6 +162,7 @@ namespace Graduate_Council.DAL
             pars[3].Value = newInfo.SubDateTime;
             pars[4].Value = newInfo.Category;
             pars[5].Value = newInfo.PageView;
+            pars[6].Value = newInfo.IsDisplay;
 
             return SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
 
@@ -145,14 +174,15 @@ namespace Graduate_Council.DAL
         /// <returns></returns>
         public int UpdateNewInfo(NewInfo newInfo,string tableName)
         {
-            string sql = "update "+tableName+" set Title = @Title, Author=@Author,Detail = @Detail,Date = @Date, Category=@Category,PageView=@PageView where Id = @Id";
+            string sql = "update "+tableName+" set Title = @Title, Author=@Author,Detail = @Detail,Date = @Date, Category=@Category,PageView=@PageView,IsDisplay=@IsDisplay where Id = @Id";
             SqlParameter[] pars = {new SqlParameter("@Title",SqlDbType.NVarChar,50),
                                        new SqlParameter("@Author",SqlDbType.NVarChar,50),
                                        new SqlParameter("@Detail",SqlDbType.NVarChar),
                                        new SqlParameter("@Date",SqlDbType.SmallDateTime),
                                        new SqlParameter("@Id",SqlDbType.Int),
                                        new SqlParameter("@Category",SqlDbType.NVarChar,50),
-                                        new SqlParameter("@PageView",SqlDbType.Int)
+                                        new SqlParameter("@PageView",SqlDbType.Int),
+                                        new SqlParameter("@IsDisplay",SqlDbType.Bit)
                                    };
             pars[0].Value = newInfo.Title;
             pars[1].Value = newInfo.Author;
@@ -161,6 +191,7 @@ namespace Graduate_Council.DAL
             pars[4].Value = newInfo.Id;
             pars[5].Value = newInfo.Category;
             pars[6].Value = newInfo.PageView;
+            pars[7].Value = newInfo.IsDisplay;
             return SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
         }
         /// <summary>
@@ -175,6 +206,22 @@ namespace Graduate_Council.DAL
             SqlParameter[] pars = {new SqlParameter("@PageView",SqlDbType.Int),
                                   new SqlParameter("@Id",SqlDbType.Int)};
             pars[0].Value = pageView;
+            pars[1].Value = id;
+            SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
+            return;
+        }
+        /// <summary>
+        /// 更新新闻是否显示在主页
+        /// </summary>
+        /// <param name="isDisplay"></param>
+        /// <param name="tableName"></param>
+        /// <param name="id"></param>
+        public void UpdateIsDisplay(bool isDisplay, string tableName, int id)
+        {
+            string sql = "update " + tableName + " set IsDisplay=@IsDisplay where Id = @Id";
+            SqlParameter[] pars = {new SqlParameter("@IsDisplay",SqlDbType.Bit),
+                                  new SqlParameter("@Id",SqlDbType.Int)};
+            pars[0].Value = isDisplay;
             pars[1].Value = id;
             SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
             return;

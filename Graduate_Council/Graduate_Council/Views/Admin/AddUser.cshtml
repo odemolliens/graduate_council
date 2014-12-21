@@ -1,7 +1,6 @@
 ﻿@{
     Layout = null;
 }
-@using Graduate_Council.Model;
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,12 +27,12 @@
         });
         function AfterSuccess(data) {
             if (data == "ok") {
-                alert("链接添加成功！");
-                window.location.href = "/Admin/LinkManage";
+                alert("用户添加成功！");
+                window.location.href = "/Admin/UserManage";
             }
             else if (data == "no") {
-                alert("信息添加失败！");
-                window.location.href = "/Admin/LinkManage";
+                alert("用户添加失败！");
+                window.location.href = "/Admin/UserManage";
             }
             else {
                 alert(data);
@@ -41,7 +40,7 @@
         }
         function exit() {
             if (confirm("确定要退出么？")) {
-                window.location.href = "/Admin/LinkManage";
+                window.location.href = "/Admin/UserManage";
             }
         }
     </script>
@@ -50,45 +49,39 @@
     <div class="place">
         <span>位置：</span>
         <ul class="placeul">
-            <li>链接管理</li>            
-            <li>添加链接</li>
+            <li>用户管理</li>            
+            <li>添加用户</li>
         </ul>
     </div>
     <div class="formbody">
         <div id="usual1" class="usual">
             <div class="itab">
                 <ul>
-                    <li><a href="#tab1" class="selected">新增链接</a></li>
+                    <li><a href="#tab1" class="selected">新增用户</a></li>
                 </ul>
             </div>
             <div id="tab1" class="tabson">
                 <div class="formtext">
-                    <b>你正在添加链接</b></div>
-                    @using (Ajax.BeginForm("AddLink", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "AfterSuccess" }, new { id = "form1" }))
+                    <b>你正在添加用户</b></div>
+                    @using (Ajax.BeginForm("AddUser", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "AfterSuccess" }, new { id = "form1" }))
                     {                                                                                
                 <ul class="forminfo">
                     <li>                    
                         <label>
-                            链接名称<b>*</b></label><input name="Name" type="text" class="dfinput" style="width: 518px;" /></li>
+                            用户名<b>*</b></label><input name="Name" type="text" class="dfinput" style="width: 518px;" /></li>
                     <li>
                         <label>
-                            链接地址<b>*</b></label>
-                        <input name="Link" type="text" value="http://" class="dfinput" style="width: 518px;" /></li>                    
+                            密码<b>*</b></label>
+                        <input name="Password" type="password" class="dfinput" style="width: 518px;" /></li>
+                   <li>
+                        <label>
+                            重复密码<b>*</b></label>
+                        <input name="RePassword" type="password" class="dfinput" style="width: 518px;" /></li>
+                         <li><label>
+                            超级管理员<b>*</b></label> &nbsp;&nbsp;&nbsp;<input name="Admin" type="checkbox" style="width:15px;height:15px;margin-right:10px;cursor:pointer;" />超级管理员请勾选</li><br /><br />                                       
                     <li>
                         <label>
-                            链接类型<b>*</b></label>
-                        <div class="usercity">
-                            <div class="cityleft">
-                                <select name="Category" class="select2">
-                                    <option>校内链接</option> 
-                                    <option>友情链接</option>                                 
-                                </select>
-                            </div>
-                        </div>
-                    </li>                   
-                    <li>
-                        <label>
-                            &nbsp;</label><input type="submit" class="btn" value="添加链接" /><label>
+                            &nbsp;</label><input type="submit" class="btn" value="添加用户" /><label>
                             &nbsp;</label><input type="button" class="btn" onclick="exit()" value="退出" style="padding-right:25px"/> </li>                            
                 </ul>
                 }               

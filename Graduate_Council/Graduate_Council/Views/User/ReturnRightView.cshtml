@@ -14,26 +14,13 @@
     <script type="text/javascript">
     $(document).ready(function () {
         $(".click").click(function () {
-            window.location.href="/Admin/AddNewInfo?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
+            window.location.href="/User/AddNewInfo?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
         });
         $(".deleteNews").click(function () {
             deleteNew($(this).attr("ids"),$(this).attr("name"),$(this));
         })
 
-    });    
-    function deleteNew(id, name,control) {
-        if (confirm("确定要删除这条信息吗？")) {
-            $.post("/Admin/DeleteNewInfo", { "id": id, "Name": name }, function (data) {
-                if (data == "ok") {
-                    $(control).parent().parent().remove();
-                    alert("删除成功");
-                }
-                else {
-                    alert("删除失败");
-                }
-            })
-        }
-    }
+    });       
     </script>
 </head>
 <body>
@@ -53,11 +40,11 @@
                     </span>
                     @if (ViewData["Name"].ToString() == "DataDownload")
                     {
-                    <a href="/Admin/AddDataDownload?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" target="_self">添加新闻</a>
+                    <a href="/User/AddDataDownload?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" target="_self">添加新闻</a>
                     }
                     else
                     {
-                         <a href="/Admin/AddNewInfo?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" target="_self">添加新闻</a>
+                         <a href="/User/AddNewInfo?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" target="_self">添加新闻</a>
                     }
                     </li>
             </ul>
@@ -83,7 +70,6 @@
                     <th>
                         访问量
                     </th>
-                    <th>是否显示</th>
                     <th>
                         操作
                     </th>
@@ -108,17 +94,8 @@
                         <td>@newInfo.PageView
                         </td>
                         <td>
-                        @if(newInfo.IsDisplay)
-                        {
-                        <label>是</label>
-                            }
-                        else
-                        {<label>否</label>}
-                        </td>
-                        <td>
-                            <a href="/Admin/EditNew?Id=@newInfo.Id&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" class="tablelink">
-                                修改</a> <a href="javascript:void(0)" class="deleteNews" name="@ViewData["Name"]" ids="@newInfo.Id">
-                                    删除</a>
+                            <a href="/User/EditNew?Id=@newInfo.Id&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]" class="tablelink">
+                                查看</a>
                         </td>
                     </tr>
                     }
@@ -145,24 +122,7 @@
                 <li class="paginItem"><a href="?PageIndex=@ViewData["pageNext"]&&Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]">
                     <span class="pagenxt"></span></a></li>
             </ul>
-        </div>
-        <div class="tip">
-            <div class="tiptop">
-                <span>提示信息</span><a></a></div>
-            <div class="tipinfo">
-                <span>
-                    <img src="/images/ticon.png" /></span>
-                <div class="tipright">
-                    <p>
-                        是否确认对信息的修改 ？</p>
-                    <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
-                </div>
-            </div>
-            <div class="tipbtn">
-                <input name="" type="button" class="sure" value="确定" />&nbsp;
-                <input name="" type="button" class="cancel" value="取消" />
-            </div>
-        </div>
+        </div>        
     </div>
     <script type="text/javascript">
         $('.tablelist tbody tr:odd').addClass('odd');

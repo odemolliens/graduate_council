@@ -133,6 +133,16 @@
                             </div>
                         </div>
                     </li>
+                     <li><label>
+                            显示新闻<b>*</b></label> &nbsp;&nbsp;&nbsp;
+                            @if(Model.IsDisplay)
+                            {
+                            <input name="IsDisplay" type="checkbox" checked="checked" style="width:15px;height:15px;margin-right:10px;cursor:pointer;" />
+                            }else
+                            {
+                                <input name="IsDisplay" type="checkbox" style="width:15px;height:15px;margin-right:10px;cursor:pointer;" />
+                            }
+                            显示新闻到主页请勾选</li><br /><br />
                     <li>
                         <label>
                             新闻内容<b>*</b></label>

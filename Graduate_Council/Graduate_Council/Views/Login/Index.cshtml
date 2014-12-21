@@ -14,10 +14,12 @@
     <script type="text/javascript">
         function afterLogin(data) {
             var serviceData = data.split(':');
-            if (serviceData[0] == 'ok') {
+            if (serviceData[0] == 'ok1') {
                 window.location.href = "/Admin/Index";
             } else if (serviceData[0] == 'no') {
                 $("#ErrorMsg").text(serviceData[1]);
+            }else if (serviceData[0]=="ok2"){
+                window.location.href = "/User/Index";
             }
             else {
                 $("#ErrorMsg").text("系统繁忙");

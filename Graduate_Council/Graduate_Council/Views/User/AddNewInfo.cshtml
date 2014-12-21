@@ -52,7 +52,7 @@
         function AfterSuccess(data) {
             if (data == "ok") {
                 alert("信息添加成功！");
-                window.location.href = "/Admin/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
+                window.location.href = "/User/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
             }
             else if (data == "no") {
                 alert("信息添加失败！");
@@ -63,7 +63,7 @@
         }
         function exit() {
             if (confirm("确定要退出么？")) {
-                window.location.href = "/Admin/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
+                window.location.href = "/User/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]";
             }
         }
     </script>
@@ -73,7 +73,7 @@
         <span>位置：</span>
         <ul class="placeul">
             <li>新闻管理</li>
-            <li><a href="/Admin/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]">@ViewData["Msg"]</a></li>
+            <li><a href="/User/ReturnRightView?Name=@ViewData["Name"]&&Msg=@ViewData["Msg"]">@ViewData["Msg"]</a></li>
             <li>添加新闻</li>
         </ul>
     </div>
@@ -116,8 +116,6 @@
                             </div>
                         </div>
                     </li>
-                    <li><label>
-                            显示新闻<b>*</b></label> &nbsp;&nbsp;&nbsp;<input name="IsDisplay" type="checkbox" style="width:15px;height:15px;margin-right:10px;cursor:pointer;" />显示新闻到主页请勾选</li><br /><br />
                     <li>
                         <label>
                             新闻内容<b>*</b></label>

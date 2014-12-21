@@ -13,6 +13,7 @@ namespace Graduate_Council.Controllers
         NewInfoService newInfoService = new NewInfoService();
         LinkInfoService linkInfoService = new LinkInfoService();
         BannerImgService bannerImgService = new BannerImgService();
+        UserInfoService userInfoService = new UserInfoService();
         //
         // GET: /Admin/
 
@@ -39,7 +40,7 @@ namespace Graduate_Council.Controllers
             string tableName = "T_" + Request["Name"];
             ViewData["Msg"] = Request["Msg"];
             int pageIndex = Convert.ToInt32(Request["PageIndex"]);
-            int pageSize = 5;
+            int pageSize = 10;
             int pageCount = newInfoService.GetPageCount(pageSize,tableName);
             pageIndex = pageIndex < 1 ? 1 : pageIndex;
             pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
@@ -105,6 +106,13 @@ namespace Graduate_Council.Controllers
             {
                 return Content("请输入并且正确输入日期,时间格式"+DateTime.Now.ToString());
             }
+            if (Request["IsDisplay"] != null)
+            {
+                if (Request["IsDisplay"].ToString() == "on")
+                {
+                    newInfo.IsDisplay = true;
+                }
+            }
             if (newInfoService.AddNewInfo(newInfo, tableName))
             {
                 return Content("ok");
@@ -145,6 +153,13 @@ namespace Graduate_Council.Controllers
             if (newInfo.SubDateTime == new DateTime(1, 1, 1, 0, 0, 0))
             {
                 return Content("请输入并且正确输入日期,时间格式" + DateTime.Now.ToString());
+            }
+            if (Request["IsDisplay"] != null)
+            {
+                if (Request["IsDisplay"].ToString() == "on")
+                {
+                    newInfo.IsDisplay = true;
+                }
             }
             if (newInfoService.UpdateNewInfo(newInfo, tableName))
             {
@@ -361,15 +376,109 @@ namespace Graduate_Council.Controllers
         [HttpPost]
         public ActionResult AddBanner(BannerImg bannerImg)
         {
-            if (Request["IsVisible"].ToString() == "on")
+            if (Request["IsVisible"]!=null)
             {
-                bannerImg.IsVisible = true;
+                if (Request["IsVisible"].ToString() == "on")
+                {
+                    bannerImg.IsVisible = true;
+                }
             }
             if (bannerImg.Path == null)
             {
                 return Content("请先选择图片并上传！");
             }
             if (bannerImgService.AddBanner(bannerImg))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+        public ActionResult UserManage()
+        {            
+            int pageIndex = Convert.ToInt32(Request["pageIndex"]);
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            int pageSize = 5;
+            int pageCount = userInfoService.GetPageCount(pageSize);
+            pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+            List<UserInfo> list = userInfoService.GetUserList(pageIndex, pageSize);
+            ViewData["list"] = list;
+            ViewData["pageCount"] = pageCount;
+            ViewData["pageIndex"] = pageIndex;
+            ViewData["pagePre"] = (pageIndex - 1) < 1 ? 1 : (pageIndex - 1);
+            ViewData["pageNext"] = (pageIndex + 1) > pageCount ? pageCount : (pageIndex + 1);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddUser(UserInfo userInfo)
+        {
+            if (string.IsNullOrEmpty(userInfo.Name))
+            {
+                return Content("请输入用户名");
+            }
+            if (string.IsNullOrEmpty(userInfo.Password))
+            {
+                return Content("请输入密码");
+            }
+            if (userInfo.Password != Request["RePassword"].ToString())
+            {
+                return Content("两次输入的密码不一样");
+            }
+            if (Request["Admin"] != null)
+            {
+                if (Request["Admin"].ToString() == "on")
+                {
+                    userInfo.Admin = true;
+                }
+            }
+            if (userInfoService.AddUser(userInfo))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+        public ActionResult EditUser()
+        {
+            int id = Convert.ToInt32(Request["Id"]);
+            id = id < 1 ? 1 : id;
+            UserInfo userInfo = userInfoService.GetUser(id);
+            ViewData.Model = userInfo;
+            return View();
+        }
+        public ActionResult UpdatePassword(UserInfo userInfo)
+        {
+            if (string.IsNullOrEmpty(userInfo.Password))
+            {
+                return Content("请输入密码");
+            }
+            if (userInfo.Password != Request["RePassword"].ToString())
+            {
+                return Content("两次输入的密码不一样");
+            }
+            if (userInfoService.UpdatePassword(userInfo.Password, userInfo.Id))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+        }
+
+        public ActionResult DeleteUser()
+        {
+            int id = Convert.ToInt32(Request["Id"]);
+            if (userInfoService.DeleteUser(id))
             {
                 return Content("ok");
             }

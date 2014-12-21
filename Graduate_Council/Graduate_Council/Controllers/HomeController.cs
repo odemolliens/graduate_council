@@ -18,15 +18,15 @@ namespace Graduate_Council.Controllers
         public ActionResult Index()
         {
 
-            List<NewInfo> list4 = newInfoService.GetPageList(1, 6, "T_CouncilDynamicNews");
-            List<NewInfo> list1 = newInfoService.GetPageList(1, 6, "T_FrontNews");
-            List<NewInfo> list2 = newInfoService.GetPageList(1, 6, "T_NoticeNews");
-            List<NewInfo> list3 = newInfoService.GetPageList(1, 6, "T_CampusEssay");
-            List<NewInfo> list5 = newInfoService.GetPageList(1, 6, "T_BranchNews");
-            List<NewInfo> list6 = newInfoService.GetPageList(1, 6, "T_JobNews");
-            List<LinkInfo> listInfo = linkInfoService.Top15Link();
+            List<NewInfo> list4 = newInfoService.GetDisplayPageList(1, 6, "T_CouncilDynamicNews");
+            List<NewInfo> list1 = newInfoService.GetDisplayPageList(1, 6, "T_FrontNews");
+            List<NewInfo> list2 = newInfoService.GetDisplayPageList(1, 6, "T_NoticeNews");
+            List<NewInfo> list3 = newInfoService.GetDisplayPageList(1, 6, "T_CampusEssay");
+            List<NewInfo> list5 = newInfoService.GetDisplayPageList(1, 6, "T_BranchNews");
+            List<NewInfo> list6 = newInfoService.GetDisplayPageList(1, 6, "T_JobNews");
+            //List<LinkInfo> listInfo = linkInfoService.Top15Link();
             List<BannerImg> bannerList = bannerImgService.GetIndexBannerList();
-            ViewData["listInfo"] = listInfo;
+            //ViewData["listInfo"] = listInfo;
             ViewData["bannerList"] = bannerList;
             ViewData["list1"] = list1;
             ViewData["list2"] = list2;
@@ -46,8 +46,8 @@ namespace Graduate_Council.Controllers
             {
                 ViewData["banner"] = bannerList[flag].Path;
             }
-            List<LinkInfo> listInfo = linkInfoService.Top15Link();
-            ViewData["listInfo"] = listInfo;
+            //List<LinkInfo> listInfo = linkInfoService.Top15Link();
+            //ViewData["listInfo"] = listInfo;
             int id = Convert.ToInt32(Request["Id"]);
             string tableName = "T_" + Request["Name"];
             NewInfo newInfo = newInfoService.GetNewInfo(id, tableName);
@@ -71,12 +71,12 @@ namespace Graduate_Council.Controllers
             string tableName = "T_" + Request["Name"];
             ViewData["Name"] = Request["Name"];
             int pageIndex = Convert.ToInt32(Request["pageIndex"]) < 1?1:Convert.ToInt32(Request["pageIndex"]);
-            int pageSize = 2;
+            int pageSize = 10;
             if (string.IsNullOrEmpty(Request["Cat"]))
             {
-                int pageCount = newInfoService.GetPageCount(pageSize, tableName);
+                int pageCount = newInfoService.GetDisplayPageCount(pageSize, tableName);
                 pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
-                List<NewInfo> list = newInfoService.GetPageList(pageIndex, pageSize, tableName);                                
+                List<NewInfo> list = newInfoService.GetDisplayPageList(pageIndex, pageSize, tableName);                                
                 ViewData["list"] = list;
                 ViewData["pageCount"] = pageCount;
                 ViewData["pageIndex"] = pageIndex;
@@ -109,17 +109,17 @@ namespace Graduate_Council.Controllers
             {
                 ViewData["banner"] = bannerList[flag].Path;
             }
-            List<LinkInfo> listInfo = linkInfoService.Top15Link();
-            ViewData["listInfo"] = listInfo;
+            //List<LinkInfo> listInfo = linkInfoService.Top15Link();
+            //ViewData["listInfo"] = listInfo;
             string tableName = "T_" + Request["Name"];
             ViewData["Name"] = Request["Name"];
             int pageIndex = Convert.ToInt32(Request["pageIndex"]) < 1 ? 1 : Convert.ToInt32(Request["pageIndex"]);
-            int pageSize = 2;
+            int pageSize = 10;
             if (string.IsNullOrEmpty(Request["Cat"]))
             {
-                int pageCount = newInfoService.GetPageCount(pageSize, tableName);
+                int pageCount = newInfoService.GetDisplayPageCount(pageSize, tableName);
                 pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
-                List<NewInfo> list = newInfoService.GetPageList(pageIndex, pageSize, tableName);
+                List<NewInfo> list = newInfoService.GetDisplayPageList(pageIndex, pageSize, tableName);
                 ViewData["list"] = list;
                 ViewData["pageCount"] = pageCount;
                 ViewData["pageIndex"] = pageIndex;

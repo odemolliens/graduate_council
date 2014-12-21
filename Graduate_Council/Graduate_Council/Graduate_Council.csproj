@@ -112,6 +112,8 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserBaseController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -566,6 +568,10 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml">
+      <SubType>
+      </SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -671,6 +677,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\DisplayDownloadList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\AddUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\EditUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\UserManage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\AddNewInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\ReturnLeftView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\ReturnRightView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\ReturnTopView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\AddDataDownload.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\EditNew.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

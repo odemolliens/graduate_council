@@ -30,7 +30,8 @@ namespace Graduate_Council.DAL
         {
             userInfo.Id = Convert.ToInt32(dr["Id"]);
             userInfo.Name = dr["Name"].ToString();//dr["Name"]!=DBNull.Value ? dr["Name"].ToString():string.Empty
-            userInfo.Password = dr["Password"].ToString();           
+            userInfo.Password = dr["Password"].ToString();
+            userInfo.Admin = Convert.ToBoolean(dr["Admin"]);
         }
 
         public List<UserInfo> GetUserList(int start, int end)
@@ -73,12 +74,14 @@ namespace Graduate_Council.DAL
         }
         public int AddUser(UserInfo userInfo)
         {
-            string sql = "insert into T_UserInfo(Name,Password) values(@Name,@Password)";
+            string sql = "insert into T_UserInfo(Name,Password,Admin) values(@Name,@Password,@Admin)";
             SqlParameter[] pars = {
                                   new SqlParameter("@Name",SqlDbType.VarChar,50),
-                                  new SqlParameter("@Password",SqlDbType.VarChar,50)};
+                                  new SqlParameter("@Password",SqlDbType.VarChar,50),
+                                  new SqlParameter("@Admin",SqlDbType.Bit)};
             pars[0].Value = userInfo.Name;
-            pars[1].Value = userInfo.Password;            
+            pars[1].Value = userInfo.Password;
+            pars[2].Value = userInfo.Admin;
             return SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
 
         }

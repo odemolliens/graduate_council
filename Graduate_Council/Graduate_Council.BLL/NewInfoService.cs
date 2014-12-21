@@ -23,6 +23,13 @@ namespace Graduate_Council.BLL
             List<NewInfo> list = newInfoDal.GetPageList(start, end, tableName);
             return list;
         }
+        public List<NewInfo> GetDisplayPageList(int pageIndex, int pageSize, string tableName)
+        {
+            int start = (pageIndex - 1) * pageSize + 1;
+            int end = pageSize * pageIndex;
+            List<NewInfo> list = newInfoDal.GetDisplayPageList(start, end, tableName);
+            return list;
+        }
         public List<NewInfo> GetPageListByCat(int pageIndex, int pageSize, string tableName,string category)
         {
             int start = (pageIndex - 1) * pageSize + 1;
@@ -34,6 +41,12 @@ namespace Graduate_Council.BLL
         public int GetPageCount(int pageSize,string tableName)
         {
             int recordCount = newInfoDal.GetRecordCount(tableName);
+            int pageCount = Convert.ToInt32(Math.Ceiling((double)recordCount / pageSize));
+            return pageCount;
+        }
+        public int GetDisplayPageCount(int pageSize, string tableName)
+        {
+            int recordCount = newInfoDal.GetDisplayRecordCount(tableName);
             int pageCount = Convert.ToInt32(Math.Ceiling((double)recordCount / pageSize));
             return pageCount;
         }
@@ -64,6 +77,11 @@ namespace Graduate_Council.BLL
         public void UpdatePageView(int pageView, string tableName,int id)
         {
             newInfoDal.UpdatePageView(pageView, tableName,id);
+            return;
+        }
+        public void UpdateIsDisplay(bool isDisplay, string tableName, int id)
+        {
+            newInfoDal.UpdateIsDisplay(isDisplay, tableName, id);
             return;
         }
     }

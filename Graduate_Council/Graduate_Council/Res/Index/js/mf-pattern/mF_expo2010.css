@@ -1,7 +1,7 @@
 /*=========mF_expo2010 --2010世博主题========*/
 .mF_expo2010 .pic li{position:absolute; cursor: default;}
 .mF_expo2010 .txt_bg{position:absolute;bottom:0;z-index:1;height:36px;width:100%;background:none;filter:alpha(opacity=0);opacity:0;}/*标题背景*/
-.mF_expo2010 .txt li{position:absolute;z-index:2;left:0;height:36px;line-height:36px;color:#fff; text-indent: 1em;}
+.mF_expo2010 .txt li{position:absolute;z-index:2;left:0;height:36px;line-height:36px;color:#fff; text-indent: 1em;background:url(../../../../images/alpa-bg.png.png);}
 .mF_expo2010 .txt li a{display:block;color:#fff;padding:2px 0 0 16px;font-size:14px;font-weight:bold;text-decoration:none;}/*标题样式*/
 .mF_expo2010 .num{position:absolute;z-index:3;bottom:8px;right:8px;}
 .mF_expo2010 .num li{float:left;position:relative;width:20px;height:18px;line-height:18px;overflow:hidden;text-align:center;margin-right:2px;}

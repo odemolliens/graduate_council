@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 @using Graduate_Council.Model;
+<html>
 <head> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>西南石油大学研究生会</title>
@@ -7,6 +8,7 @@
      <link href="../../Res/Index/css/main.css" rel="stylesheet" type="text/css" />
      <link href="../../Res/Index/css/home.css" rel="stylesheet" type="text/css" />
      <link href="../../Res/Index/css/style.css" rel="stylesheet" type="text/css" />
+     @RenderSection("scripts",false)
      <script src="../../Res/Index/js/myfocus-2.0.1.min.js" type="text/javascript"></script>
   <script type="text/javascript">
       //设置banner
@@ -65,65 +67,9 @@
   </div>
   </div> 
   @RenderBody() 
-  <div class="footer-info"> 
-   <div class="container"> 
-    <div class="footer-content"> 
-     <table> 
-      <tbody>
-       <tr> 
-        <td> 
-         <div> 
-          <div class="title">
-           <img class="icon" src="/images/icon/wechat.png" />
-           <span>微信</span>
-          </div> 
-          <div style="float:left;margin-top:10px;"> 
-           <img class="erweima" src="/images/erweima/sdyjs.jpg" /> 
-           <img class="erweima" src="/images/erweima/xywy.jpg" /> 
-          </div> 
-         </div> </td> 
-        <td>
-         <div class="title">
-          <img class="icon" src="/images/icon/globe32.png" />
-          <span>校内链接</span>
-         </div> 
-         <ul>         
-          <li><a href="http://www.swpu.edu.cn/">西南石油大学</a></li>
-          <li><a href="http://gs.swpu.edu.cn/">西南石油大学研究生院</a></li>
-          <li><a href="http://ygb.swpu.edu.cn/">西南石油大学研究生工作部</a></li>
-          <li><a href="http://tw.swpu.edu.cn/  ">校团委</a></li>
-          <li><a href="http://xgb.swpu.edu.cn/">学工部</a></li>
-          <li><a href="http://xctz.swpu.edu.cn/">西南石油大学党委宣传部统战部</a></li>
-          <li><a href="http://news.swpu.edu.cn/">西南石油大学新闻网</a></li>
-          <li><a href="http://xiaobao.swpu.edu.cn/">校报在线</a></li>
-          <li><a href="http://llxx.swpu.edu.cn/">西南石油学院大学理论学习网</a></li>
-          <li><a href="http://172.16.1.125/VIEWGOOD/WebMedia/index.aspx">石大讲坛</a></li>
-          <li><a href="http://guangbo.swpu.edu.cn/">西南石油大学广播在线</a></li>  
-         </ul></td> 
-        <td>
-         <div class="title">
-          <img class="icon" src="/images/icon/refresh32.png" />
-          <span>友情链接</span>
-         </div> 
-         <ul>         
-          <li><a href="http://sgt.swpu.edu.cn/yjsh.htm">石油与天然气工程学院学生工网站链接作</a></li>
-          <li><a href="http://hgy.swpu.edu.cn/">化工院信息研分会</a></li>
-          <li><a href="http://dxy.swpu.edu.cn">电气信息学院</a></li>
-          <li><a href="http://jgy.swpu.edu.cn/">土木工程与建筑学院官方网站</a></li>
-          <li><a href="http://weibo.com/u/5311399965">西南石油大学地科院研究生会微博</a></li>
-          <li><a href="http://cly.swpu.edu.cn/">材料院</a></li>
-          <li><a href="http://szb.swpu.edu.cn/">马克思主义学院</a></li>
-          <li><a href="http://wyx.swpu.edu.cn/otype.asp?classid=1">外国语学院研究生分会</a></li>
-         </ul></td> 
-       </tr> 
-      </tbody>
-     </table> 
-    </div> 
-   </div> 
-  </div> 
   <div class="footer">
     西南石油大学研究生院 &copy; Copyrights By SWPU Graduate School All Rights Reserved 
-   <br /> 地址: 成都市新都区新都大道8号&nbsp;|&nbsp;<a style="color:#CCC" href="/Login">后台管理</a>
+   <br /> 地址: 成都市新都区新都大道8号&nbsp;|&nbsp;<a style="color:#000" href="/Home/Link">友情链接</a>&nbsp;|&nbsp;<a style="color:#CCC" href="/Login">后台管理</a>
   </div>  
  </body>
 </html>

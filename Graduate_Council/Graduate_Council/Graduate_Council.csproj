@@ -129,6 +129,7 @@
     <Content Include="images\about\favicon.ico" />
     <Content Include="images\about\title.png" />
     <Content Include="images\add.png" />
+    <Content Include="images\alpa-bg.png.png" />
     <Content Include="images\banner\banner1.png" />
     <Content Include="images\banner\banner2.png" />
     <Content Include="images\banner\banner3.png" />
@@ -159,6 +160,7 @@
     <Content Include="images\dp.png" />
     <Content Include="images\erweima\sdyjs.jpg" />
     <Content Include="images\erweima\xywy.jpg" />
+    <Content Include="images\erweima\zjtg.jpg" />
     <Content Include="images\f01.png" />
     <Content Include="images\f02.png" />
     <Content Include="images\f03.png" />
@@ -546,6 +548,8 @@
     <Content Include="Res\Admin\src\jquery.gvChart-1.0.1.js" />
     <Content Include="Res\Index\css\home.css" />
     <Content Include="Res\Index\css\main.css" />
+    <Content Include="Res\Index\css\online.css" />
+    <Content Include="Res\Index\css\page.css" />
     <Content Include="Res\Index\css\style.css" />
     <Content Include="Res\Index\js\mf-pattern\mF_expo2010.css" />
     <Content Include="Res\Index\js\mf-pattern\mF_expo2010.js" />
@@ -704,6 +708,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\EditNew.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Link.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\OnlineSubmission.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

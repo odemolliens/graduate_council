@@ -47,12 +47,11 @@
 
 
 .home-box{
-	width: 332px;
-	padding: 10px;
+	width: 352px;
 	float: left;
 	line-height: auto;
 	background: #FFF;
-	min-height: 200px;
+	min-height: 100px;
 }
 
 .list-table{
@@ -60,15 +59,15 @@
 }
 
 .list-table tr th{
-	width: 250px;
+	width: 270px;
 	float: left;
 	text-align: left;
 	word-break:keep-all;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    line-height: 25px;
-    font-weight: 100;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  line-height: 25px;
+  font-weight: 100;
     
 }
 .list-table tr th a{
@@ -107,14 +106,40 @@
 }
 
 .home-right-tips{
-	width: 248px;
-	border: 1px solid #e9e6c4;
-	min-height: 80px;
-	background:#fefbdc url(/images/icon/testimonial32.png) no-repeat;
+	width: 280px;
+	min-height: 76px;
 	background-position-x:240px;
 	background-position-y:15px;
-	padding-right: 25px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 5px;
+}
+
+
+.weixin-box{
+	width: 278px;
+	float: left;
+	border: #e5e5e5 1px solid;
+}
+
+.weixin-box .images .erweima{
+	float: left;
+	width: 100px;
+	margin-left: 20px;
+}
+
+.weixin-box .title{
+	width: 268px;
+	border-bottom: #e5e5e5 1px solid;
+	color: #5093d5;
+	font-size: 12px;
+	line-height: 18px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	float: left;
+	padding-left: 10px;
+}
+
+.weixin-box .title img{
+	width: 18px;
+	height: 18px;
+	float: left;
+	margin-right: 6px;
 }

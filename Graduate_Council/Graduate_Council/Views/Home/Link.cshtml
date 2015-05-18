@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Link";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+<div class="base"> 
+   <div class="container"> 
+    <div class="content"> 
+     <div class="row"> 
+      <div class="main-top-img"> 
+       @if (ViewData["banner"] == null)
+    {
+        <img src="/images/banner/banner1.png" alt="banner1.png" style="width:100%;height:200px;"/>
+    }
+    else
+    {
+         <img src="@ViewData["banner"]" alt="banner1.png" style="width:100%;height:200px;"/>
+    }
+      </div>  
+     </div> 
+     <div class="row"> 
+      <div class="left-nav"> 
+       <div class="title"> 
+        <font>友情链接</font> 
+        <span class="tran-left"></span>
+        <span class="tran-right"></span> 
+       </div> 
+       <ul> 
+        <li><a href="javascript:;">全部链接</a></li>      
+       </ul> 
+      </div> 
+      <div class="main-page"> 
+       <table class="news-list"> 
+        <tbody>
+        <tr> 
+          <th><a href="http://tw.swpu.edu.cn/  ">校团委</a></th> 
+          <th><a href="http://xgb.swpu.edu.cn/">学工部</a></th> 
+         </tr> 
+         <tr> 
+          <th><a href="http://sgt.swpu.edu.cn/yjsh.htm">石油与天然气工程学院学生工网站链接作</a></th> 
+          <th><a href="http://hgy.swpu.edu.cn/">化工院信息研分会</a></th> 
+         </tr>
+         <tr> 
+          <th><a href="http://dxy.swpu.edu.cn">电气信息学院</a></th> 
+          <th><a href="http://jgy.swpu.edu.cn/">土木工程与建筑学院官方网站</a></th> 
+         </tr>
+         <tr> 
+          <th><a href="http://xctz.swpu.edu.cn/">西南石油大学党委宣传部统战部</a></th> 
+          <th><a href="http://news.swpu.edu.cn/">西南石油大学新闻网</a></th> 
+         </tr>
+         <tr> 
+          <th><a href="http://sgt.swpu.edu.cn/yjsh.htm">石油与天然气工程学院学生工网站链接作</a></th>
+          <th><a href="http://hgy.swpu.edu.cn/">化工院信息研分会</a></th>
+          </tr>
+          <tr>
+          <th><a href="http://dxy.swpu.edu.cn">电气信息学院</a></th>
+          <th><a href="http://jgy.swpu.edu.cn/">土木工程与建筑学院官方网站</a></th>
+          </tr>
+          <tr>
+          <th><a href="http://weibo.com/u/5311399965">西南石油大学地科院研究生会微博</a></th>
+          <th><a href="http://cly.swpu.edu.cn/">材料院</a></th>
+          </tr>
+          <tr>
+           <th><a href="http://xiaobao.swpu.edu.cn/">校报在线</a></th>
+            <th><a href="http://llxx.swpu.edu.cn/">西南石油学院大学理论学习网</a></th>
+            </tr>
+          <tr>
+            <th><a href="http://172.16.1.125/VIEWGOOD/WebMedia/index.aspx">石大讲坛</a></th>
+            <th><a href="http://guangbo.swpu.edu.cn/">西南石油大学广播在线</a></th>
+            </tr>
+          <tr>
+            <th><a href="http://szb.swpu.edu.cn/">马克思主义学院</a></th>
+            <th><a href="http://wyx.swpu.edu.cn/otype.asp?classid=1">外国语学院研究生分会</a></th>
+         </tr> 
+        </tbody> 
+       </table> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 

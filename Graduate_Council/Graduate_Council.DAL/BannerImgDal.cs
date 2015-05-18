@@ -16,6 +16,8 @@ namespace Graduate_Council.DAL
             bannerImg.Id = Convert.ToInt32(dr["Id"]);
             bannerImg.Path = dr["Path"].ToString();//dr["Name"]!=DBNull.Value ? dr["Name"].ToString():string.Empty
             bannerImg.IsVisible = Convert.ToBoolean(dr["IsVisible"]);
+            bannerImg.Url = dr["Url"].ToString();
+            bannerImg.Title = dr["Title"].ToString();
         }
 
         public List<BannerImg> GetBannerList(int start, int end)
@@ -46,26 +48,36 @@ namespace Graduate_Council.DAL
             par.Value = id;
             return SqlHelper.ExecuteNonquery(sql, CommandType.Text, par);
         }
+        
         public int UpdateBanner(BannerImg bannerImg)
         {
-            string sql = "update T_BannerImg set Path=@Path,IsVisible=@IsVisible where Id=@Id";
+            string sql = "update T_BannerImg set Path=@Path,IsVisible=@IsVisible,Url=@Url,Title=@Title where Id=@Id";
             SqlParameter[] pars = {new SqlParameter("@Id",DbType.Int32),
                                   new SqlParameter("@Path",SqlDbType.VarChar,200),
-                                  new SqlParameter("@IsVisible",SqlDbType.Bit)};
+                                  new SqlParameter("@IsVisible",SqlDbType.Bit),
+                                  new SqlParameter("@Url",SqlDbType.VarChar,200),
+                                  new SqlParameter("@Title",SqlDbType.NVarChar,50)};
             pars[0].Value = bannerImg.Id;
             pars[1].Value = bannerImg.Path;
             pars[2].Value = bannerImg.IsVisible;
+            pars[3].Value = bannerImg.Url;
+            pars[4].Value = bannerImg.Title;
+        
             return SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
 
         }
         public int AddBanner(BannerImg bannerImg)
         {
-            string sql = "insert into T_BannerImg(Path,IsVisible) values(@Path,@IsVisible)";
+            string sql = "insert into T_BannerImg(Path,IsVisible,Url,Title) values(@Path,@IsVisible,@Url,@Title)";
             SqlParameter[] pars = {
                                   new SqlParameter("@Path",SqlDbType.VarChar,200),
-                                  new SqlParameter("@IsVisible",SqlDbType.Bit)};
+                                  new SqlParameter("@IsVisible",SqlDbType.Bit),
+                                  new SqlParameter("@Url",SqlDbType.VarChar,200),
+                                  new SqlParameter("@Title",SqlDbType.NVarChar,50)};
             pars[0].Value = bannerImg.Path;
             pars[1].Value = bannerImg.IsVisible;
+            pars[2].Value = bannerImg.Url;
+            pars[3].Value = bannerImg.Title;
             return SqlHelper.ExecuteNonquery(sql, CommandType.Text, pars);
 
         }

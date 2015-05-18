@@ -18,12 +18,12 @@ namespace Graduate_Council.Controllers
         public ActionResult Index()
         {
 
-            List<NewInfo> list4 = newInfoService.GetDisplayPageList(1, 6, "T_CouncilDynamicNews");
-            List<NewInfo> list1 = newInfoService.GetDisplayPageList(1, 6, "T_FrontNews");
-            List<NewInfo> list2 = newInfoService.GetDisplayPageList(1, 6, "T_NoticeNews");
-            List<NewInfo> list3 = newInfoService.GetDisplayPageList(1, 6, "T_CampusEssay");
-            List<NewInfo> list5 = newInfoService.GetDisplayPageList(1, 6, "T_BranchNews");
-            List<NewInfo> list6 = newInfoService.GetDisplayPageList(1, 6, "T_JobNews");
+            List<NewInfo> list4 = newInfoService.GetDisplayPageList(1, 4, "T_CouncilDynamicNews");
+            List<NewInfo> list1 = newInfoService.GetDisplayPageList(1, 4, "T_FrontNews");
+            List<NewInfo> list2 = newInfoService.GetDisplayPageList(1, 4, "T_NoticeNews");
+            List<NewInfo> list3 = newInfoService.GetDisplayPageList(1, 4, "T_CampusEssay");
+            List<NewInfo> list5 = newInfoService.GetDisplayPageList(1, 4, "T_BranchNews");
+            List<NewInfo> list6 = newInfoService.GetDisplayPageList(1, 4, "T_JobNews");
             //List<LinkInfo> listInfo = linkInfoService.Top15Link();
             List<BannerImg> bannerList = bannerImgService.GetIndexBannerList();
             //ViewData["listInfo"] = listInfo;
@@ -142,6 +142,73 @@ namespace Graduate_Council.Controllers
                 ViewData["pageNext"] = (pageIndex + 1) > pageCount ? pageCount : (pageIndex + 1);
             }
             return View();
+        }
+        public ActionResult Link()
+        {
+            List<BannerImg> bannerList = bannerImgService.GetIndexBannerList();
+            Random random = new Random();
+            int flag = random.Next(0, bannerList.Count);
+            if (bannerList != null)
+            {
+                ViewData["banner"] = bannerList[flag].Path;
+            }
+            return View();
+        }
+        /// <summary>
+        /// 在线投稿
+        /// </summary>
+        /// <returns></returns>
+        /// 2015-04-16
+        [HttpGet]
+        public ActionResult OnlineSubmission()
+        {
+            List<BannerImg> bannerList = bannerImgService.GetIndexBannerList();
+            Random random = new Random();
+            int flag = random.Next(0, bannerList.Count);
+            if (bannerList != null)
+            {
+                ViewData["banner"] = bannerList[flag].Path;
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// 在线投稿
+        /// </summary>
+        /// <returns></returns>
+        /// 2015-04-16
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult OnlineSubmission(NewInfo newInfo)
+        {
+            string tableName = "T_" + Request["Category2"];
+            newInfo.PageView = 0;
+            if (newInfo.Title == null)
+            {
+                return Content("请输入标题");
+            }
+            if (string.IsNullOrEmpty(newInfo.Author))
+            {
+                return Content("请输入来源");
+            }
+            if (string.IsNullOrEmpty(newInfo.Detail))
+            {
+                return Content("请输入新闻内容");
+            }
+            if (newInfo.SubDateTime == new DateTime(1, 1, 1, 0, 0, 0))
+            {
+                return Content("请输入并且正确输入日期,时间格式" + DateTime.Now.ToString());
+            }
+            newInfo.IsDisplay = false;
+            if (newInfoService.AddNewInfo(newInfo, tableName))
+            {
+                return Content("ok");
+            }
+            else
+            {
+                return Content("no");
+            }
+            
         }
     }
 }

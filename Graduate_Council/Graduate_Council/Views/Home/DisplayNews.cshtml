@@ -4,7 +4,7 @@
 }
 @using Graduate_Council.Model
 @model Graduate_Council.Model.NewInfo
-<div class="base"> 
+@*<div class="base"> 
    <div class="container"> 
     <div class="content"> 
     <div class="row">
@@ -53,5 +53,56 @@
      </div> 
     </div> 
    </div> 
-  </div>
+  </div>*@
+
+  <div class="base"> 
+   <div class="container"> 
+    <div class="content"> 
+     <div class="row"> 
+      <div class="main-top-img"> 
+       @if (ViewData["banner"] == null)
+    {
+        <img src="/images/banner/banner1.png" alt="banner1.png" style="width:100%;height:200px;"/>
+    }
+    else
+    {
+         <img src="@ViewData["banner"]" alt="banner1.png" style="width:100%;height:200px;"/>
+    }
+      </div> 
+     </div> 
+     <div class="row"> 
+      <div class="left-nav"> 
+       <div class="title"> 
+        <font>@NewsCategory.totalCategory[ViewData["Name"].ToString()]</font> 
+        <span class="tran-left"></span>
+        <span class="tran-right"></span> 
+       </div> 
+       <ul> 
+       @{int i = 1;}
+      @foreach (string str in NewsCategory.newsCategory[ViewData["Name"].ToString()])
+      {
+        <li><a href="/Home/DisplayList?Name=@ViewData["Name"]&&Cat=@i">@str</a></li>
+      }  
+       </ul> 
+      </div> 
+      <div class="main-page"> 
+       <div class="path">
+       @NewsCategory.totalCategory[ViewData["Name"].ToString()]&nbsp;
+       </div> 
+       <div class="article"> 
+        <div class="title">
+         @Model.Title
+        </div> 
+        <div class="info">
+          来源：@Model.Author 日期：@Model.SubDateTime.ToShortDateString()
+        </div> 
+        <div class="content">
+          @Html.Raw(Model.Detail)
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
 
